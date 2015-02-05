@@ -69,12 +69,12 @@
             <!-- /.row -->
             <div class="row">
                 <div class="col-lg-3">
-                    <div class="panel panel-default">
+                    <div class="panel panel-default side-penel">
                         <div class="panel-heading">
                             <i class="fa fa-bell fa-fw"></i> Calendar
                         </div>
                         <!-- /.panel-heading -->
-                        <div class="panel-body" style="min-height: 600px;">
+                        <div class="panel-body">
 
                         </div>
                         <!-- /.panel-body -->
@@ -218,7 +218,7 @@
                 </div>
                 <!-- /.col-lg-6 -->
                 <div class="col-lg-3">
-                    <div class="panel panel-default">
+                    <div class="panel panel-default side-penel">
                         <div class="panel-heading" >
                             <i class="fa fa-bell fa-fw"></i> Side Menu
                         </div>
@@ -437,6 +437,13 @@
                     }
                 }
             });
+        });
+    </script>
+
+    <script>
+        $(function () {
+            var currentScreenHeight = $("#page-wrapper > div").height();
+            $(".side-penel > .panel-body").height(currentScreenHeight - 10);
         });
     </script>
 
