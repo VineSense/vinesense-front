@@ -187,6 +187,14 @@ $(document).on('ready page:load', function() {
     selectRadioHandler[selectedValue]();
   });
   $('#map').hide();
+
+  $('#daterangepicker').daterangepicker({
+      format: 'YYYY-MM-DD',
+      startDate: '2015-02-09',
+      endDate: '2015-02-09'
+  }, function(start, end, label) {
+        console.log(start.toISOString(), end.toISOString(), label);
+  });
 });
 
 

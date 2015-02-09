@@ -28,6 +28,7 @@ var raster = new ol.layer.Tile({
                 var map = new ol.Map({
                   layers: [raster, vector],
                   target: 'map',
+                  interactions: ol.interaction.defaults({mouseWheelZoom:false}),
                   view: new ol.View({
                   center: ol.proj.transform([ -122.30068, 38.34942], 'EPSG:4326', 'EPSG:3857'),
                   zoom: 17

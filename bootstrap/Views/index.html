@@ -39,6 +39,8 @@
       width: 100%;
     }
   </style>
+
+  <link rel="stylesheet" type="text/css" media="all" href="../resources/lib/daterangepicker/daterangepicker-bs3.css" />
 </head>
 <body>
   <div id="wrapper">
@@ -64,46 +66,6 @@
             </div>
             <!-- /.panel-heading -->
             <div class="panel-body">
-              <div class="form-group" style="margin: 0 auto; text-align: center;">
-                <label> 
-                  <span data-selectbox-title>Site :</span>
-                  <select>
-                      <option>1</option>
-                      <option>2</option>
-                      <option>3</option>
-                      <option>4</option>
-                      <option>5</option>
-                      <option>6</option>
-                      <option>7</option>
-                  </select>
-                </label>
-                <span data-checkbox-group>
-                  <label class="checkbox-inline">
-                      <input type="checkbox" data-event-check="0" checked>
-                      <span>1</span>
-                  </label>
-                  <label class="checkbox-inline">
-                      <input type="checkbox" data-event-check="1" checked>
-                      <span>2</span>
-                  </label>
-                  <label class="checkbox-inline">
-                      <input type="checkbox" data-event-check="2" checked>
-                      <span>3</span>
-                  </label>
-                  <label class="checkbox-inline">
-                      <input type="checkbox" data-event-check="3" checked>
-                      <span>4</span>
-                  </label>
-                  <label class="checkbox-inline">
-                      <input type="checkbox" data-event-check="4" checked>
-                      <span>5</span>
-                  </label>
-                </span>
-                
-                <input type="radio" data-event-radio name="site-depth" value="site" checked>Site
-                <input type="radio" data-event-radio name="site-depth" value="depth">Depth
-                
-              </div>
               <div id="graph1" class="graph1"></div>
             </div>
             <!-- /.panel-body -->
@@ -117,7 +79,68 @@
                 <i class="fa fa-bell fa-fw"></i> Side Menu
             </div>
             <!-- /.panel-heading -->
-            <div class="panel-body"></div>
+            <div class="panel-body" style="height : 255px;">
+                <div class="form-group" style="text-align: center;">
+                    <div class="input-prepend input-group">
+                       <!--<span class="add-on input-group-addon">-->
+                           <!--<i class="glyphicon glyphicon-calendar fa fa-calendar"></i>-->
+                       <!--</span>-->
+                       <input type="text" style="width: 200px" name="daterangepicker" id="daterangepicker" class="form-control" value="2015-02-09 - 2015-02-09" />
+                    </div>
+
+                    <div>
+                        <input type="radio" data-event-radio name="site-depth" value="site" checked>Site
+                        <input type="radio" data-event-radio name="site-depth" value="depth">Depth
+                    </div>
+
+                    <label>
+                        <span data-selectbox-title>Site :</span>
+                        <select>
+                            <option>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                            <option>4</option>
+                            <option>5</option>
+                            <option>6</option>
+                            <option>7</option>
+                        </select>
+                    </label>
+                    <span data-checkbox-group>
+                      <label class="checkbox-inline">
+                          <input type="checkbox" data-event-check="0" checked>
+                          <span>1</span>
+                      </label>
+                      <label class="checkbox-inline">
+                          <input type="checkbox" data-event-check="1" checked>
+                          <span>2</span>
+                      </label>
+                      <label class="checkbox-inline">
+                          <input type="checkbox" data-event-check="2" checked>
+                          <span>3</span>
+                      </label>
+                      <label class="checkbox-inline">
+                          <input type="checkbox" data-event-check="3" checked>
+                          <span>4</span>
+                      </label>
+                      <label class="checkbox-inline">
+                          <input type="checkbox" data-event-check="4" checked>
+                          <span>5</span>
+                      </label>
+                    </span>
+
+                    <div class="btn-group" data-toggle="buttons">
+                        <label class="btn btn-default active">
+                            <input type="radio" name="options"> Daily
+                        </label>
+                        <label class="btn btn-default">
+                            <input type="radio" name="options"> Weekly
+                        </label>
+                        <label class="btn btn-default">
+                            <input type="radio" name="options"> Monthly
+                        </label>
+                    </div>
+                </div>
+            </div>
               <!-- /.panel-body -->
           </div>
           <!-- /.panel -->
@@ -161,7 +184,44 @@
                 <i class="fa fa-bell fa-fw"></i> Side Menu
             </div>
             <!-- /.panel-heading -->
-            <div class="panel-body"></div>
+            <div class="panel-body" style="height : 230px;">
+                <div style="text-align: center; margin-bottom: 10px;">
+                    <select>
+                        <option>2010</option>
+                        <option>2011</option>
+                        <option>2012</option>
+                        <option>2013</option>
+                        <option>2014</option>
+                        <option>2015</option>
+                    </select>
+                    /
+                    <select>
+                        <option>2010</option>
+                        <option>2011</option>
+                        <option>2012</option>
+                        <option>2013</option>
+                        <option>2014</option>
+                        <option>2015</option>
+                    </select>
+                </div>
+
+                <div class="alert-success">
+                    Temporature Temporature Temporature Temporature Temporature Temporature
+                    Temporature Temporature Temporature Temporature Temporature Temporature
+                    Temporature Temporature Temporature Temporature Temporature Temporature
+
+                </div>
+                <div class="alert-info">
+                    Temporature Temporature Temporature Temporature Temporature Temporature
+                    Temporature Temporature Temporature Temporature Temporature Temporature
+                    Temporature Temporature Temporature Temporature Temporature Temporature
+                </div>
+                <div class="alert-warning">
+                    Temporature Temporature Temporature Temporature Temporature Temporature
+                    Temporature Temporature Temporature Temporature Temporature Temporature
+                    Temporature Temporature Temporature Temporature Temporature Temporature
+                </div>
+            </div>
               <!-- /.panel-body -->
           </div>
           <!-- /.panel -->
@@ -191,6 +251,9 @@
   </script>
   <script src="../resources/lib/highChart/js/highcharts.js"></script>
   <script src="../resources/lib/highChart/js/modules/exporting.js"></script>
+
+  <script type="text/javascript" src="../resources/lib/daterangepicker/moment.js"></script>
+  <script type="text/javascript" src="../resources/lib/daterangepicker/daterangepicker.js"></script>
 
   <!-- Custom Theme JavaScript -->
   <script src="../resources/lib/dist/js/sb-admin-2.js"></script>
