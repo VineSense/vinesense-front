@@ -66,7 +66,7 @@
             </div>
             <!-- /.panel-heading -->
             <div class="panel-body">
-              <div id="graph1" class="graph1"></div>
+              <div id="graph-1"></div>
             </div>
             <!-- /.panel-body -->
           </div>
@@ -89,8 +89,11 @@
                     </div>
 
                     <div>
-                        <input type="radio" data-event-radio name="site-depth" value="site" checked>Site
-                        <input type="radio" data-event-radio name="site-depth" value="depth">Depth
+                        <input type="radio" data-event-change-view name="data-event-change-view" value="site" checked>Site
+                        <input type="radio" data-event-change-view name="data-event-change-view" value="depth">Depth
+
+                        <input type="radio" data-event-change-type name="data-event-change-type" value="temperature" checked>Temperature
+                        <input type="radio" data-event-change-type name="data-event-change-type" value="moisture">Moisture
                     </div>
 
                     <label>
@@ -172,7 +175,7 @@
             </div>
             <!-- /.panel-heading -->
             <div class="panel-body">
-                <div id="graph2" class="graph2"></div>
+                <div id="graph-2"></div>
             </div>
             <!-- /.panel-body -->
           </div>

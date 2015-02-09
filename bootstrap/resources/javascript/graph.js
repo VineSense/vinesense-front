@@ -11,7 +11,7 @@ var option = {
   },
   yAxis: {
     title: {
-        text: 'Temperature (°C)'
+      text: 'Temperature (°C)'
     }
   },
   tooltip: {
@@ -57,39 +57,46 @@ var option = {
 var option2 = {
   chart : {
       height: 200,
-      type: 'spline'
+      type: 'spline',
+      zoomType: 'x'
   },
   title: {
       text: ''
   },
   xAxis: {
-      type: 'datetime',
-      labels: {
-          overflow: 'justify'
-      }
+    // categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun','Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+
+    type: 'datetime',
+    dateTimeLabelFormats: { // don't display the dummy year
+        month: '%b',
+    },
+    tickInterval: 30 * 24 * 3600 * 1000,
+    min: Date.UTC(1971, 1, 1),
+    max: Date.UTC(1971, 12, 31),
+    title: {
+        text: null
+    }
   },
   yAxis: {
     title: {
-        text: 'Wind speed (m/s)'
+        text: 'Temperature (°C)'
     }
   },
   tooltip: {
       shared: true,
-      valueSuffix: ' m/s'
+      valueSuffix: ' °C'
   },
   plotOptions: {
     spline: {
-      lineWidth: 4,
-      states: {
-          hover: {
-              lineWidth: 5
-          }
-      },
       marker: {
-          enabled: false
+        enabled: false
       },
-      pointInterval: 3600000, // one hour
-      pointStart: Date.UTC(2009, 9, 6, 0, 0, 0)
+      lineWidth: 1,
+      states: {
+        hover: {
+          lineWidth: 1
+        }
+      }
     }
   },
   legend: {
@@ -97,15 +104,22 @@ var option2 = {
     align: 'right',
     verticalAlign: 'middle',
     borderWidth: 0,
+  },
+  navigator: {
+    outlineWidth: 1
   }
 };
 
 
 $(document).on('ready page:load', function() {
-  var selectRadioHandler = {};
+  var selectViewHandler = {},
+      selectTypeHandler = {};
+      
+
   // 
-  selectRadioHandler['site'] = function(){
-    var data = [{
+  selectViewHandler['site'] = function(){
+    var graph = $('#graph-1'),
+        data = [{
             name: 'Level 1',
             data: [13, 5.9, 3.5, 1.5, 34.2, 5.5, 23.2, 23.5, 22.3, 8.3, 15.9, 9.6]
         }, {
@@ -126,11 +140,13 @@ $(document).on('ready page:load', function() {
         }];
     $('[data-selectbox-title]').text('Site: ');
     makeCheckBox(6);
-    drawChart(data);
+    option.series = data;
+    drawChart(graph, option);
   };
 
-  selectRadioHandler['depth'] = function(){
-    var data = [{
+  selectViewHandler['depth'] = function(){
+    var graph = $('#graph-1'),
+        data = [{
             name: 'Level 1',
             data: [13, 5.9, 3.5, 1.5, 34.2, 5.5, 23.2, 23.5, 22.3, 8.3, 15.9, 9.6]
         }, {
@@ -149,14 +165,41 @@ $(document).on('ready page:load', function() {
 
     $('[data-selectbox-title]').text('Depth: ');
     makeCheckBox(5);
-    drawChart(data);
+    option.series = data;
+    drawChart(graph, option);
   };
 
-  function drawChart(data){
-    option.series = data;
-    $('#graph1').highcharts(option);
+  selectTypeHandler['temperature'] = function() {
+    var graph = $('#graph-1'),
+        yAxis = {
+          title: {
+            text: 'Temperature (°C)'
+          }
+        };
+
+    option.yAxis = yAxis;
+    drawChart(graph, option);
+  };
+
+  selectTypeHandler['moisture'] = function() {  
+    var graph = $('#graph-1'),
+        yAxis = {
+          title: {
+            text: 'Moisture (°C)'
+          }
+        };
+
+    option.yAxis = yAxis;
+
+    drawChart(graph, option);
+  };
+
+
+  function drawChart(graph, option){
+    graph.highcharts(option);
   }
 
+  // 수정요망 (핸들바스 사용)
   function makeCheckBox(number){
     var template, i,
         dataCheckboxGroup = $('[data-checkbox-group]');
@@ -170,7 +213,13 @@ $(document).on('ready page:load', function() {
 
 
   $('[data-checkbox-group]').on('change', '[data-event-check]', function(){
-    console.log('change')
+$('#daterangepicker').daterangepicker({
+      format: 'YYYY-MM-DD',
+      startDate: '2015-02-09',
+      endDate: '2015-02-09'
+  }, function(start, end, label) {
+        console.log(start.toISOString(), end.toISOString(), label);
+  });
     var target = $(this);
         isChecked = target.is(':checked'),
         level = target.attr('data-event-check'), 
@@ -182,45 +231,40 @@ $(document).on('ready page:load', function() {
     }
   });
 
-  $('[data-event-radio]').on('change', function(){
+  $('[data-event-change-view]').on('change', function(){
     var selectedValue = $(this).val();
-    selectRadioHandler[selectedValue]();
+    selectViewHandler[selectedValue]();
   });
-  $('#map').hide();
 
-  $('#daterangepicker').daterangepicker({
-      format: 'YYYY-MM-DD',
-      startDate: '2015-02-09',
-      endDate: '2015-02-09'
-  }, function(start, end, label) {
-        console.log(start.toISOString(), end.toISOString(), label);
+  $('[data-event-change-type]').on('change', function(){
+    var selectedValue = $(this).val();
+    selectTypeHandler[selectedValue]();
   });
 });
-
-
-
-
-
 
 $(function () {
-  $('#graph1').highcharts(option)
+  $('#graph-1').highcharts(option)
 
 var data = [{
-    name: 'Level 1',
-    data: [13, 5.9, 3.5, 1.5, 34.2, 5.5, 23.2, 23.5, 22.3, 8.3, 15.9, 9.6]
-}, {
-    name: 'Level 2',
-    data: [5.2, 6.8, 8.7, 91.3, 7.0, 22.0, 24.8, 45.1, 23.1, 43.1, 81.6, 32.5]
-}, {
-    name: 'Level 3',
-    data: [3.9, 4.6, 12.5, 24.4, 23.5, 31.0, 22.6, 33.9, 11.3, 3.0, 4.9, 5.0]
-}, {
-    name: 'Level 4',
-    data: [5.9, 2.2, 4.7, 4.5, 15.9, 5.2, 4.0, 2.6, 42.2, 33.3, 63.6, 24.8]
-}, {
-    name: 'Level 5',
-    data: [3.9, 2.2, 5.7, 7.5, 18.9, 32.2, 4.0, 16.6, 7.2, 8.3, 4.6, 3.8]
-}];
+            name: '2013',
+            data: makeData()
+        }, {
+            name: '2014',
+            data: makeData()
+        }];
 option2.series = data;        
-$('#graph2').highcharts(option2);
+$('#graph-2').highcharts(option2);
 });
+
+
+function makeData(){
+  var data = [],
+      item;
+
+  for(var i = 0 ; i < 365 ; i++) {
+    item = [Date.UTC(1971, 1, 1) + (86400000 * i), Math.random()];
+    data[i] = item;
+  }
+
+  return data;
+}
