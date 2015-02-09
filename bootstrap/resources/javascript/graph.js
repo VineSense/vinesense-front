@@ -213,13 +213,6 @@ $(document).on('ready page:load', function() {
 
 
   $('[data-checkbox-group]').on('change', '[data-event-check]', function(){
-$('#daterangepicker').daterangepicker({
-      format: 'YYYY-MM-DD',
-      startDate: '2015-02-09',
-      endDate: '2015-02-09'
-  }, function(start, end, label) {
-        console.log(start.toISOString(), end.toISOString(), label);
-  });
     var target = $(this);
         isChecked = target.is(':checked'),
         level = target.attr('data-event-check'), 
@@ -239,6 +232,14 @@ $('#daterangepicker').daterangepicker({
   $('[data-event-change-type]').on('change', function(){
     var selectedValue = $(this).val();
     selectTypeHandler[selectedValue]();
+  });
+  
+  $('#daterangepicker').daterangepicker({
+      format: 'YYYY-MM-DD',
+      startDate: '2015-02-09',
+      endDate: '2015-02-09'
+  }, function(start, end, label) {
+        console.log(start.toISOString(), end.toISOString(), label);
   });
 });
 
