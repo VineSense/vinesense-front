@@ -233,14 +233,11 @@ $(document).on('ready page:load', function() {
     var selectedValue = $(this).val();
     selectTypeHandler[selectedValue]();
   });
-  
-  $('#daterangepicker').daterangepicker({
-      format: 'YYYY-MM-DD',
-      startDate: '2015-02-09',
-      endDate: '2015-02-09'
-  }, function(start, end, label) {
-        console.log(start.toISOString(), end.toISOString(), label);
-  });
+
+    $('#reportrange2 span').html(moment().subtract(29, 'days').format('MMMM D, YYYY') + ' - ' + moment().format('MMMM D, YYYY'));
+    $('#reportrange2').daterangepicker({
+        opens: 'center'
+    });
 });
 
 $(function () {
