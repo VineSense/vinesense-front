@@ -79,68 +79,90 @@
                 <i class="fa fa-bell fa-fw"></i> Side Menu
             </div>
             <!-- /.panel-heading -->
-            <div class="panel-body" style="height : 255px;">
-                <div class="form-group" style="text-align: center;">
-                    <div class="input-prepend input-group">
+            <div class="panel-body side-menu-top-items">
+                <div class="form-group">
+                    <div class="input-prepend input-group side-menu-top-item">
                        <!--<span class="add-on input-group-addon">-->
                            <!--<i class="glyphicon glyphicon-calendar fa fa-calendar"></i>-->
                        <!--</span>-->
-                       <input type="text" style="width: 200px" name="daterangepicker" id="daterangepicker" class="form-control" value="2015-02-09 - 2015-02-09" />
+                       <!--<input type="text" name="daterangepicker" id="daterangepicker" class="form-control side-menu-top-item-daterangepicker" value="2015-02-09 - 2015-02-09" />-->
+
+                        <div id="reportrange2" class="btn side-menu-top-item-daterangepicker">
+                            <i class="glyphicon glyphicon-calendar fa fa-calendar"></i>
+                            <span></span> <b class="caret"></b>
+                        </div>
                     </div>
 
-                    <div>
-                        <input type="radio" data-event-change-view name="data-event-change-view" value="site" checked>Site
-                        <input type="radio" data-event-change-view name="data-event-change-view" value="depth">Depth
-
-                        <input type="radio" data-event-change-type name="data-event-change-type" value="temperature" checked>Temperature
-                        <input type="radio" data-event-change-type name="data-event-change-type" value="moisture">Moisture
+                    <div class="side-menu-top-item">
+                        <div class="btn-group" data-toggle="buttons">
+                            <label class="btn btn-default active">
+                                <input type="radio" data-event-change-type name="data-event-change-type" value="temperature" checked>Temperature
+                            </label>
+                            <label class="btn btn-default">
+                                <input type="radio" data-event-change-type name="data-event-change-type" value="moisture">Moisture
+                            </label>
+                        </div>
+                        
+                        <div class="btn-group" data-toggle="buttons">
+                            <label class="btn btn-default active">
+                                <input type="radio" data-event-change-view name="data-event-change-view" value="site" checked>Site
+                            </label>
+                            <label class="btn btn-default">
+                                <input type="radio" data-event-change-view name="data-event-change-view" value="depth">Depth
+                            </label>
+                        </div>
                     </div>
 
-                    <label>
-                        <span data-selectbox-title>Site :</span>
-                        <select>
-                            <option>1</option>
-                            <option>2</option>
-                            <option>3</option>
-                            <option>4</option>
-                            <option>5</option>
-                            <option>6</option>
-                            <option>7</option>
-                        </select>
-                    </label>
-                    <span data-checkbox-group>
-                      <label class="checkbox-inline">
-                          <input type="checkbox" data-event-check="0" checked>
-                          <span>1</span>
-                      </label>
-                      <label class="checkbox-inline">
-                          <input type="checkbox" data-event-check="1" checked>
-                          <span>2</span>
-                      </label>
-                      <label class="checkbox-inline">
-                          <input type="checkbox" data-event-check="2" checked>
-                          <span>3</span>
-                      </label>
-                      <label class="checkbox-inline">
-                          <input type="checkbox" data-event-check="3" checked>
-                          <span>4</span>
-                      </label>
-                      <label class="checkbox-inline">
-                          <input type="checkbox" data-event-check="4" checked>
-                          <span>5</span>
-                      </label>
-                    </span>
+                    <div class="side-menu-top-item">
+                        <label>
+                            <span data-selectbox-title>Site :</span>
+                            <select>
+                                <option>1</option>
+                                <option>2</option>
+                                <option>3</option>
+                                <option>4</option>
+                                <option>5</option>
+                                <option>6</option>
+                                <option>7</option>
+                            </select>
+                        </label>
 
-                    <div class="btn-group" data-toggle="buttons">
-                        <label class="btn btn-default active">
-                            <input type="radio" name="options"> Daily
-                        </label>
-                        <label class="btn btn-default">
-                            <input type="radio" name="options"> Weekly
-                        </label>
-                        <label class="btn btn-default">
-                            <input type="radio" name="options"> Monthly
-                        </label>
+                        <span data-checkbox-group>
+                          <label class="checkbox-inline">
+                              <input type="checkbox" data-event-check="0" checked>
+                              <span>1</span>
+                          </label>
+                          <label class="checkbox-inline">
+                              <input type="checkbox" data-event-check="1" checked>
+                              <span>2</span>
+                          </label>
+                          <label class="checkbox-inline">
+                              <input type="checkbox" data-event-check="2" checked>
+                              <span>3</span>
+                          </label>
+                          <label class="checkbox-inline">
+                              <input type="checkbox" data-event-check="3" checked>
+                              <span>4</span>
+                          </label>
+                          <label class="checkbox-inline">
+                              <input type="checkbox" data-event-check="4" checked>
+                              <span>5</span>
+                          </label>
+                        </span>
+                    </div>
+
+                    <div class="side-menu-top-item">
+                        <div class="btn-group" data-toggle="buttons">
+                            <label class="btn btn-default active">
+                                <input type="radio" name="options"> Daily
+                            </label>
+                            <label class="btn btn-default">
+                                <input type="radio" name="options"> Weekly
+                            </label>
+                            <label class="btn btn-default">
+                                <input type="radio" name="options"> Monthly
+                            </label>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -187,8 +209,8 @@
                 <i class="fa fa-bell fa-fw"></i> Side Menu
             </div>
             <!-- /.panel-heading -->
-            <div class="panel-body" style="height : 230px;">
-                <div style="text-align: center; margin-bottom: 10px;">
+            <div class="panel-body side-menu-bottom-items">
+                <div class="side-menu-bottom-item-datepicker">
                     <select>
                         <option>2010</option>
                         <option>2011</option>

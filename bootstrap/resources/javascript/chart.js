@@ -31,7 +31,7 @@ charts[0] = {
       valueSuffix: '°C'
     },
     rangeSelector : { 
-      enabled : false,
+      enabled : false
     },
     plotOptions: {
       line: {
@@ -45,10 +45,10 @@ charts[0] = {
         },
         states: {
           hover: {
-            lineWidth: 1
+            lineWidth: 2
           }
         },
-        lineWidth: 1,
+        lineWidth: 2,
         showInLegend: true
       }
     },
@@ -109,7 +109,7 @@ charts[1] = {
     },
     // 차트의 범위 선택 관리 
     rangeSelector : { 
-      enabled : false,
+      enabled : false
     },
     // 차트의 구성 관리 
     plotOptions: {
@@ -117,10 +117,10 @@ charts[1] = {
         marker: {
           enabled: false
         },
-        lineWidth: 1,
+        lineWidth: 2,
         states: {
           hover: {
-            lineWidth: 1
+            lineWidth: 2
           }
         }
       }
@@ -301,14 +301,10 @@ $(document).on('ready page:load', function() {
   }
 
 // -------------------------- date-picker 관련 메소드 --------------------------
-
-  $('#daterangepicker').daterangepicker({
-      format: 'YYYY-MM-DD',
-      startDate: '2015-02-09',
-      endDate: '2015-02-09'
-  }, function(start, end, label) {
-        console.log(start.toISOString(), end.toISOString(), label);
-  });
+    $('#reportrange2 span').html(moment().subtract(29, 'days').format('MMMM D, YYYY') + ' - ' + moment().format('MMMM D, YYYY'));
+    $('#reportrange2').daterangepicker({
+        opens: 'center'
+    });
 });
 
 // -------------------------- 나중에 지울 것  --------------------------
@@ -316,7 +312,7 @@ $(document).on('ready page:load', function() {
 function makeData(){
   var data = [],
       item;
-  for(var i = 0 ; i <= 365 ; i++) {
+  for(var i = 0 ; i <= 10 ; i++) {
     item = [Date.UTC(1971, 12, i + 1), Math.random()];
     data[i] = item;
   }

@@ -365,3 +365,35 @@ table.dataTable thead .sorting:after {
 .panel {
     margin-bottom: 10px;
 }
+
+.side-menu-top-items {
+    height : 230px;
+    text-align: center;
+}
+
+.side-menu-top-item {
+    margin-top: 15px ! important;
+    margin-bottom: 15px ! important;
+}
+
+.side-menu-top-item-daterangepicker {
+    /*width: 150px;*/
+    display: inline-block;
+    background: #fff;
+    cursor: pointer;
+    padding: 5px 10px;
+    border: 1px solid #ccc;
+    margin-left: 60px;
+    /*margin: 0 auto;*/
+}
+
+.side-menu-bottom-items {
+    height : 290px;
+    text-align: center;
+}
+
+.side-menu-bottom-item-datepicker {
+    text-align: center;
+    margin-bottom: 10px;
+}
+
