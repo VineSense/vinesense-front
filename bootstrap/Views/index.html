@@ -54,10 +54,13 @@
     </nav>
     <div id="page-wrapper">
       <div class="row"> 
-        <div class="col-lg-8">
+        <div class="col-lg-8" id="chart-1-panel">
           <div class="panel panel-default">
             <div class="panel-heading">
-              <i class="fa fa-clock-o fa-fw"></i> chart1
+                <i class="fa fa-clock-o fa-fw"></i> chart1
+                <button class="btn btn-default btn-sm panel-item-toggle-btn pull-right" data-event-change-panel="chart-1">
+                    <span class="glyphicon glyphicon-resize-full pull-right" id="chart-1-span" aria-hidden="true"></span>
+                </button>
             </div>
             <!-- /.panel-heading -->
             <div class="panel-body">
@@ -68,7 +71,7 @@
           <!-- /.panel -->
         </div>
         <!-- /.col-lg-8 -->
-        <div class="col-lg-4">
+        <div class="col-lg-4" id="chart-1-side-panel">
           <div class="panel panel-default side-penel">
             <div class="panel-heading" >
                 <i class="fa fa-bell fa-fw"></i> Side Menu
@@ -164,10 +167,13 @@
       </div>
       <!-- /.row -->
       <div class="row">
-        <div class="col-lg-12">
+        <div class="col-lg-12" id="map-panel">
           <div class="panel panel-default">
             <div class="panel-heading">
-              <i class="fa fa-clock-o fa-fw"></i> Map
+                <i class="fa fa-clock-o fa-fw"></i> Map
+                <button class="btn btn-default btn-sm panel-item-toggle-btn pull-right" data-event-change-panel="map">
+                    <span class="glyphicon glyphicon-resize-small pull-right" id="map-span" aria-hidden="true"></span>
+                </button>
             </div>
             <!-- /.panel-heading -->
             <div class="panel-body">
@@ -180,10 +186,13 @@
       </div>
       <!-- /.row -->
       <div class="row">
-        <div class="col-lg-8">
+        <div class="col-lg-8" id="chart-2-panel">
           <div class="panel panel-default">
             <div class="panel-heading">
                 <i class="fa fa-clock-o fa-fw"></i> chart2
+                <button class="btn btn-default btn-sm panel-item-toggle-btn pull-right" data-event-change-panel="chart-2">
+                    <span class="glyphicon glyphicon-resize-full pull-right" id="chart-2-span" aria-hidden="true"></span>
+                </button>
             </div>
             <!-- /.panel-heading -->
             <div class="panel-body">
@@ -193,7 +202,7 @@
           </div>
         </div>
         <!-- /.col-lg-8 -->
-        <div class="col-lg-4">
+        <div class="col-lg-4" id="chart-2-side-panel">
           <div class="panel panel-default side-penel">
             <div class="panel-heading" >
                 <i class="fa fa-bell fa-fw"></i> Side Menu
@@ -258,13 +267,7 @@
   <script src="../resources/lib/bower_components/metisMenu/dist/metisMenu.min.js"></script>
 
   <script src="../resources/javascript/chart.js"></script>
-  <script>
-    // $(function () {
-    //   var currentScreenHeight = $("#page-wrapper > div").height();
-    //   $(".side-penel > .panel-body").height(currentScreenHeight - 10);
-    // });
-  </script>
-  
+  <script src="../resources/javascript/common.js"></script>
 
   <script src="../resources/lib/highStock/js/highstock.js"></script>
   <script src="../resources/lib/highStock/js/modules/exporting.js"></script>

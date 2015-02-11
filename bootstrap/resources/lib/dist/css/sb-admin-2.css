@@ -393,7 +393,7 @@ table.dataTable thead .sorting:after {
 }
 
 .side-menu-bottom-item {
-    margin-bottom: 15px ! important;
+    margin-bottom: 10px ! important;
 }
 
 .side-menu-bottom-item-datepicker {
@@ -405,4 +405,8 @@ table.dataTable thead .sorting:after {
     overflow-x:hidden;
     overflow-y:auto;
     height: 170px;
+}
+
+.panel-item-toggle-btn {
+    margin-top: -2px;
 }
