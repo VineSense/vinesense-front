@@ -377,19 +377,23 @@ table.dataTable thead .sorting:after {
 }
 
 .side-menu-top-item-daterangepicker {
-    /*width: 150px;*/
     display: inline-block;
     background: #fff;
     cursor: pointer;
     padding: 5px 10px;
     border: 1px solid #ccc;
+
+    /*수정 할 것*/
     margin-left: 60px;
-    /*margin: 0 auto;*/
 }
 
 .side-menu-bottom-items {
-    height : 290px;
+    height : 230px;
     text-align: center;
+}
+
+.side-menu-bottom-item {
+    margin-bottom: 15px ! important;
 }
 
 .side-menu-bottom-item-datepicker {
@@ -397,3 +401,8 @@ table.dataTable thead .sorting:after {
     margin-bottom: 10px;
 }
 
+.side-menu-bottom-item-info {
+    overflow-x:hidden;
+    overflow-y:auto;
+    height: 170px;
+}

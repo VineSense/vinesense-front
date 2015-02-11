@@ -20,6 +20,7 @@
 
   <!-- Custom CSS -->
   <link href="../resources/lib/dist/css/sb-admin-2.css" rel="stylesheet">
+    <link href="../resources/lib/dist/css/map.css" rel="stylesheet">
 
   <!-- Custom Fonts -->
   <link href="../resources/lib/bower_components/fontawesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
@@ -33,12 +34,6 @@
   <link rel="stylesheet" href="http://openlayers.org/en/v3.1.1/css/ol.css" type="text/css">
   
   <script src="http://openlayers.org/en/v3.1.1/build/ol.js" type="text/javascript"></script>
-  <style>
-    .map {
-      height: 1000;
-      width: 100%;
-    }
-  </style>
 
   <link rel="stylesheet" type="text/css" media="all" href="../resources/lib/daterangepicker/daterangepicker-bs3.css" />
 </head>
@@ -82,11 +77,6 @@
             <div class="panel-body side-menu-top-items">
                 <div class="form-group">
                     <div class="input-prepend input-group side-menu-top-item">
-                       <!--<span class="add-on input-group-addon">-->
-                           <!--<i class="glyphicon glyphicon-calendar fa fa-calendar"></i>-->
-                       <!--</span>-->
-                       <!--<input type="text" name="daterangepicker" id="daterangepicker" class="form-control side-menu-top-item-daterangepicker" value="2015-02-09 - 2015-02-09" />-->
-
                         <div id="reportrange2" class="btn side-menu-top-item-daterangepicker">
                             <i class="glyphicon glyphicon-calendar fa fa-calendar"></i>
                             <span></span> <b class="caret"></b>
@@ -210,42 +200,42 @@
             </div>
             <!-- /.panel-heading -->
             <div class="panel-body side-menu-bottom-items">
-                <div class="side-menu-bottom-item-datepicker">
-                    <select>
-                        <option>2010</option>
-                        <option>2011</option>
-                        <option>2012</option>
-                        <option>2013</option>
-                        <option>2014</option>
-                        <option>2015</option>
-                    </select>
-                    /
-                    <select>
-                        <option>2010</option>
-                        <option>2011</option>
-                        <option>2012</option>
-                        <option>2013</option>
-                        <option>2014</option>
-                        <option>2015</option>
-                    </select>
+                <div class="side-menu-bottom-item">
+                    <div class="btn-group" data-toggle="buttons">
+                        <label class="btn btn-default btn-sm active">
+                            <input type="radio" data-event-change-chart-section name="data-event-change-chart-section" value="temperature" checked> 전체
+                        </label>
+                        <label class="btn btn-default btn-sm">
+                            <input type="radio" data-event-change-chart-section name="data-event-change-chart-section" value="temperature"> 씨뿌리는 시기
+                        </label>
+                        <label class="btn btn-default btn-sm">
+                            <input type="radio" data-event-change-chart-section name="data-event-change-chart-section" value="temperature"> 꽃피는 시기
+                        </label>
+                        <label class="btn btn-default btn-sm">
+                            <input type="radio" data-event-change-chart-section name="data-event-change-chart-section" value="temperature"> 추수 시기
+                        </label>
+                    </div>
                 </div>
 
-                <div class="alert-success">
-                    Temporature Temporature Temporature Temporature Temporature Temporature
-                    Temporature Temporature Temporature Temporature Temporature Temporature
-                    Temporature Temporature Temporature Temporature Temporature Temporature
+                <div class="side-menu-bottom-item-info">
+                    <ul class="list-unstyled">
+                        <li>높은온도 : 100일</li>
+                        <li>2015.01.02 ~ 2015.02.02 : +4°C (평균온도 : 10°C)</li>
+                        <li>2015.01.02 ~ 2015.02.02 : +4°C (평균온도 : 10°C)</li>
+                        <li>2015.01.02 ~ 2015.02.02 : +4°C (평균온도 : 10°C)</li>
+                        <li>2015.01.02 ~ 2015.02.02 : +4°C (평균온도 : 10°C)</li>
+                        <li>2015.01.02 ~ 2015.02.02 : +4°C (평균온도 : 10°C)</li>
+                        <li>2015.01.02 ~ 2015.02.02 : +4°C (평균온도 : 10°C)</li>
+                        <li>2015.01.02 ~ 2015.02.02 : +4°C (평균온도 : 10°C)</li>
+                        <li>2015.01.02 ~ 2015.02.02 : +4°C (평균온도 : 10°C)</li>
+                        <li>2015.01.02 ~ 2015.02.02 : +4°C (평균온도 : 10°C)</li>
+                        <li>2015.01.02 ~ 2015.02.02 : +4°C (평균온도 : 10°C)</li>
+                        <li>2015.01.02 ~ 2015.02.02 : +4°C (평균온도 : 10°C)</li>
+                        <li>2015.01.02 ~ 2015.02.02 : +4°C (평균온도 : 10°C)</li>
+                        <li>구간별 평균온도 차이 : 40일</li>
+                    </ul>
+                </div>
 
-                </div>
-                <div class="alert-info">
-                    Temporature Temporature Temporature Temporature Temporature Temporature
-                    Temporature Temporature Temporature Temporature Temporature Temporature
-                    Temporature Temporature Temporature Temporature Temporature Temporature
-                </div>
-                <div class="alert-warning">
-                    Temporature Temporature Temporature Temporature Temporature Temporature
-                    Temporature Temporature Temporature Temporature Temporature Temporature
-                    Temporature Temporature Temporature Temporature Temporature Temporature
-                </div>
             </div>
               <!-- /.panel-body -->
           </div>
