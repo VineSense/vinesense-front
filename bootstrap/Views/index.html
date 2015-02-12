@@ -105,17 +105,17 @@
                         
                         <div class="btn-group" data-toggle="buttons">
                             <label class="btn btn-default active">
-                                <input type="radio" data-event-change-view name="data-event-change-view" value="site" checked>Site
+                                <input type="radio" data-event-change-view-option name="data-event-change-view" value="depth" checked>Depth
                             </label>
                             <label class="btn btn-default">
-                                <input type="radio" data-event-change-view name="data-event-change-view" value="depth">Depth
+                                <input type="radio" data-event-change-view-option name="data-event-change-view" value="site">Site
                             </label>
                         </div>
                     </div>
 
                     <div class="side-menu-top-item">
                         <label>
-                            <span data-selectbox-title>Site :</span>
+                            <span data-selectbox-title>Depth :</span>
                             <select>
                                 <option>1</option>
                                 <option>2</option>
@@ -154,13 +154,13 @@
                     <div class="side-menu-top-item">
                         <div class="btn-group" data-toggle="buttons">
                             <label class="btn btn-default active">
-                                <input type="radio" name="options"> Daily
+                                <input type="radio" data-event-change-view-day name="options" value="12"> Daily
                             </label>
                             <label class="btn btn-default">
-                                <input type="radio" name="options"> Weekly
+                                <input type="radio" data-event-change-view-day name="options" value="144"> Weekly
                             </label>
                             <label class="btn btn-default">
-                                <input type="radio" name="options"> Monthly
+                                <input type="radio" data-event-change-view-day name="options" value="365"> Monthly
                             </label>
                         </div>
                     </div>
@@ -197,20 +197,7 @@
             </div>
             <!-- /.panel-heading -->
             <div class="panel-body">
-                <div id="chart-2"></div>
-            </div>
-            <!-- /.panel-body -->
-          </div>
-        </div>
-        <!-- /.col-lg-8 -->
-        <div class="col-lg-4">
-          <div class="panel panel-default side-penel">
-            <div class="panel-heading" >
-                <i class="fa fa-bell fa-fw"></i> Side Menu
-            </div>
-            <!-- /.panel-heading -->
-            <div class="panel-body side-menu-bottom-items">
-                <div class="side-menu-bottom-item-datepicker">
+                <div>
                     <select>
                         <option>2010</option>
                         <option>2011</option>
@@ -229,22 +216,74 @@
                         <option>2015</option>
                     </select>
                 </div>
+                <div class="btn-group" data-toggle="buttons">
+                    <label class="btn btn-default active">
+                        <input type="radio" data-event-change- name="data-event-change-" value="high" checked>High
+                    </label>
+                    <label class="btn btn-default">
+                        <input type="radio" data-event-change- name="data-event-change-" value="low">Low
+                    </label>
+                </div>
+                <div id="chart-2" style="min-width: 400px; height: 400px; margin: 0 auto"></div>
+            </div>
+            <!-- /.panel-body -->
+          </div>
+        </div>
+        <!-- /.col-lg-8 -->
+        <div class="col-lg-4">
+          <div class="panel panel-default side-penel">
+            <div class="panel-heading" >
+                <i class="fa fa-bell fa-fw"></i> Side Menu
+            </div>
+            <!-- /.panel-heading -->
+            <div class="panel-body side-menu-bottom-items">
+                <div class="btn-group" data-toggle="buttons" style="width: 100%;">
+                  <label class="btn btn-default active">
+                    <input type="radio" data-event-change- name="data-event-change-" value="high" checked>All 
+                  </label>
+                  <label class="btn btn-default">
+                      <input type="radio" data-event-change- name="data-event-change-" value="high">씨뿌리는기간 
+                  </label>
+                  <label class="btn btn-default">
+                      <input type="radio" data-event-change- name="data-event-change-" value="low">꽃피는기간
+                  </label>
+                  <label class="btn btn-default">
+                    <input type="radio" data-event-change- name="data-event-change-" value="high">추수기간 
+                  </label>
+                </div>
+                <div class="alert-success">
+                  높은온도 : 100일 
+                </div>
 
                 <div class="alert-success">
-                    Temporature Temporature Temporature Temporature Temporature Temporature
-                    Temporature Temporature Temporature Temporature Temporature Temporature
-                    Temporature Temporature Temporature Temporature Temporature Temporature
-
+                    2013.01.01 ~ 2014.01.01 : 이구간별 +4도 높았다. (평균온도 : 10도)
                 </div>
                 <div class="alert-info">
-                    Temporature Temporature Temporature Temporature Temporature Temporature
-                    Temporature Temporature Temporature Temporature Temporature Temporature
-                    Temporature Temporature Temporature Temporature Temporature Temporature
+                    2013.01.01 ~ 2014.01.01 : +4 (평균온도 : 10도)
+                </div>
+                <div class="alert-info">
+                    2013.01.01 ~ 2014.01.01 : +4 (평균온도 : 10도)
+                </div>
+                <div class="alert-info">
+                    2013.01.01 ~ 2014.01.01 : 40 (평균온도 : 10도)
+                </div>
+                <div class="alert-info">
+                    2013.01.01 ~ 2014.01.01 : 40 (평균온도 : 10도)
+                </div>
+                <div class="alert-success">
+                    2013.01.01 ~ 2014.01.01 : 40 (평균온도 : 10도)
+                </div>
+                <div class="alert-info">
+                    2013.01.01 ~ 2014.01.01 : 40 (평균온도 : 10도)
+                </div>
+                <div class="alert-info">
+                    2013.01.01 ~ 2014.01.01 : 40 (평균온도 : 10도)
+                </div>
+                <div class="alert-info">
+                    구간별 평균온도 차이: 40일 
                 </div>
                 <div class="alert-warning">
-                    Temporature Temporature Temporature Temporature Temporature Temporature
-                    Temporature Temporature Temporature Temporature Temporature Temporature
-                    Temporature Temporature Temporature Temporature Temporature Temporature
+                    3 Section
                 </div>
             </div>
               <!-- /.panel-body -->
@@ -275,8 +314,8 @@
     // });
   </script>
   
-
   <script src="../resources/lib/highStock/js/highstock.js"></script>
+  <script src="../resources/lib/highStock/js/highcharts-more.js"></script>
   <script src="../resources/lib/highStock/js/modules/exporting.js"></script>
 
   <script type="text/javascript" src="../resources/lib/daterangepicker/moment.js"></script>
