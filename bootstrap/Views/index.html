@@ -98,17 +98,17 @@
                         
                         <div class="btn-group" data-toggle="buttons">
                             <label class="btn btn-default active">
-                                <input type="radio" data-event-change-view name="data-event-change-view" value="site" checked>Site
+                                <input type="radio" data-event-change-view-option name="data-event-change-view" value="depth" checked>Depth
                             </label>
                             <label class="btn btn-default">
-                                <input type="radio" data-event-change-view name="data-event-change-view" value="depth">Depth
+                                <input type="radio" data-event-change-view-option name="data-event-change-view" value="site">Site
                             </label>
                         </div>
                     </div>
 
                     <div class="side-menu-top-item">
                         <label>
-                            <span data-selectbox-title>Site :</span>
+                            <span data-selectbox-title>Depth :</span>
                             <select>
                                 <option>1</option>
                                 <option>2</option>
@@ -147,13 +147,13 @@
                     <div class="side-menu-top-item">
                         <div class="btn-group" data-toggle="buttons">
                             <label class="btn btn-default active">
-                                <input type="radio" name="options"> Daily
+                                <input type="radio" data-event-change-view-day name="options" value="12"> Daily
                             </label>
                             <label class="btn btn-default">
-                                <input type="radio" name="options"> Weekly
+                                <input type="radio" data-event-change-view-day name="options" value="144"> Weekly
                             </label>
                             <label class="btn btn-default">
-                                <input type="radio" name="options"> Monthly
+                                <input type="radio" data-event-change-view-day name="options" value="365"> Monthly
                             </label>
                         </div>
                     </div>
@@ -270,6 +270,7 @@
   <script src="../resources/javascript/common.js"></script>
 
   <script src="../resources/lib/highStock/js/highstock.js"></script>
+  <script src="../resources/lib/highStock/js/highcharts-more.js"></script>
   <script src="../resources/lib/highStock/js/modules/exporting.js"></script>
 
   <script type="text/javascript" src="../resources/lib/daterangepicker/moment.js"></script>

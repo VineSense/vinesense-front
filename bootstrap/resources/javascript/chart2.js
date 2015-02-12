@@ -72,9 +72,10 @@ charts[1] = {
   option: {
     // 차트의 전반적인 내용 관리 
     chart : {
+      ignoreHiddenSeries: false,
       height: 200,
       zoomType: 'x',
-      type: 'spline'
+      type: 'line'
     },
     // 차트의 제목 관리 
     title : {
@@ -285,14 +286,9 @@ $(document).on('ready page:load', function() {
     chart.object = chart.target.highcharts();
   }
 
-  $('[data-event-change-view-option]').on('change', function(){
+  $('[data-event-change-view]').on('change', function(){
     var selectedValue = $(this).val();
     selectViewHandler[selectedValue]();
-  });
-
-  $('[data-event-change-view-day]').on('change', function(){
-    var selectedValue = $(this).val();
-    selectViewRange(selectedValue);
   });
 
   $('[data-event-change-type]').on('change', function(){
@@ -364,81 +360,141 @@ charts[0].option.series = [{
 
 // -------------------------- chart 초기 그리기 --------------------------
 $(function () {
+
   charts[0].target.highcharts('StockChart', charts[0].option);
   charts[0].object = charts[0].target.highcharts();
+
+  charts[1].target
+  charts[1].target
+
+  var standardData = charts[1].option.series[0].data;
+  var compareData = charts[1].option.series[1].data;
+  var isBiging = false;
+  var plotBands = [],
+      j = 0;
+
+  var startPoint1 = {
+      x: null,
+      y: null
+    }, startPoint2 = {
+      x: null,
+      y: null
+    };
+  var endPoint1 = {
+      x: null,
+      y: null
+    }, endPoint2 = {
+      x: null,
+      y: null
+    };
+
+
   
-  var standardData = charts[1].option.series[0].data,
-      compareData = charts[1].option.series[1].data;
- 
-  charts[1].option.xAxis.plotBands = getPlotBandsGapTemperature(standardData, compareData, true);
+  var crossingArea;
+  for(var i = 1 ; i < 365 ; i++) {
+    if(!isBiging && standardData[i][1] >= compareData[i][1]) {
+      crossingArea = {
+        type: 'arearange',
+        // showInLegend: false,
+        showTooltip: false,
+        // color: 'rgba(68, 170, 213, .2)',
+        color: 'red',
+        data: []
+      };
+
+      isBiging = true;
+      startPoint1.x = standardData[i-1][0];
+      startPoint1.y = standardData[i-1][1];
+
+      startPoint2.x = compareData[i-1][0];
+      startPoint2.y = compareData[i-1][1];
+
+      endPoint1.x = standardData[i][0];
+      endPoint1.y = standardData[i][1];
+
+      endPoint2.x = compareData[i][0];
+      endPoint2.y = compareData[i][1];
+
+      var crossingPoint;
+
+      crossingPoint = calCrossing(startPoint1, endPoint1, startPoint2, endPoint2);
+
+      console.log(crossingPoint.x);
+      var item = [];
+      item[0] = crossingPoint.x;
+      item[1] = crossingPoint.y;
+      item[2] = crossingPoint.y;
+      crossingArea.data.push(item);
+
+      var item = [];
+      item[0] = standardData[i][0];
+      item[1] = compareData[i][1];
+      item[2] = standardData[i][1];
+      crossingArea.data.push(item);
+
+      plotBands[j] = {
+        from: crossingPoint.x, //- (standardData[i][0] - standardData[i - 1][0]) / 2,
+        color: 'red'
+      };
+    } else if(isBiging && standardData[i][1] <= compareData[i][1]) {
+      isBiging = false;
+
+      startPoint1.x = standardData[i-1][0];
+      startPoint1.y = standardData[i-1][1];
+
+      startPoint2.x = compareData[i-1][0];
+      startPoint2.y = compareData[i-1][1];
+
+      endPoint1.x = standardData[i][0];
+      endPoint1.y = standardData[i][1];
+
+      endPoint2.x = compareData[i][0];
+      endPoint2.y = compareData[i][1];
+
+      var crossingPoint;
+
+      crossingPoint = calCrossing(startPoint1, endPoint1, startPoint2, endPoint2);
+
+      var item = [];
+      item[0] = crossingPoint.x;
+      item[1] = crossingPoint.y;
+      item[2] = crossingPoint.y;
+      crossingArea.data.push(item);
+      // return ;
+      
+      // Shallow copy
+      var newObject = jQuery.extend({}, crossingArea);
+
+      charts[1].option.series.push(newObject);
+
+    } else if(isBiging) {
+      var item = [];
+      item[0] = standardData[i][0];
+      item[1] = compareData[i][1];
+      item[2] = standardData[i][1];
+      console.dir(item);
+      crossingArea.data.push(item);
+    }
+  }
 
   charts[1].target.highcharts('StockChart', charts[1].option);
   charts[1].object = charts[1].target.highcharts();
 
+  today = Date.UTC(1970, 0, 365);
+
+  charts[0].object.xAxis[0].setExtremes(Date.UTC(1970, 0, 354), today);
 });
 
-function selectViewRange(day) {
-  charts[0].object.xAxis[0].setExtremes(Date.UTC(1970, 0, 366 - day), Date.UTC(1970, 0, 365));
-}
 
-
-// 온도차이에 구간 구하는 함수 
-function getPlotBandsGapTemperature(standardData, compareData, optionLow) {
-  var plotBands = [],
-      i,
-      length = standardData.length,
-      isBiging = false,
-      j = 0;
-
-  optionLow = optionLow || false;
-
-  for(i = 0 ; i < length ; i++) {
-    if(!isBiging && ((standardData[i][1] >= compareData[i][1]) ^ optionLow)) {
-      isBiging = true;
-      plotBands[j] = {
-        from: calCrossing(standardData, compareData, i),
-        color: optionLow ? 'rgba(0, 0, 255, .6)' : 'rgba(255, 0, 0, .6)'
-      };
-    } else if(isBiging && ((standardData[i][1] <= compareData[i][1]) ^ optionLow)) {
-      isBiging = false;
-      plotBands[j].to = calCrossing(standardData, compareData, i);
-      j++;
-    }
-  }
-  return plotBands;
-}
-
-// 데이터로부터 점가져오는 함수 
-function getPointFromData(standardData, compareData, index) {
-  var points = [];
-  points[0] = {
-    x: standardData[index-1][0],
-    y: standardData[index-1][1]  
+function calCrossing(point1, point2, point3, point4) {
+  var resultPoint = {
+    x: null,
+    y: null
   };
 
-  points[1] = {
-    x: standardData[index][0],
-    y: standardData[index][1]  
-  };
+  resultPoint.x = ((point1.x * point2.y - point1.y * point2.x) * (point3.x - point4.x) - (point1.x - point2.x) * (point3.x * point4.y - point3.y * point4.x)) / ((point1.x - point2.x) * (point3.y - point4.y) - (point1.y - point2.y) * (point3.x - point4.x));
+  resultPoint.y = ((point1.x * point2.y - point1.y * point2.x) * (point3.y - point4.y) - (point1.y - point2.y) * (point3.x * point4.y - point3.y * point4.x)) / ((point1.x - point2.x) * (point3.y - point4.y) - (point1.y - point2.y) * (point3.x - point4.x));
 
-  points[2] = {
-    x: compareData[index-1][0],
-    y: compareData[index-1][1]
-  };
-  
-  points[3] = {
-    x: compareData[index][0],
-    y: compareData[index][1]
-  };
-  return points;
-}
-
-// 온도차이에 교차하는 점 구하는 함수 
-function calCrossing(standardData, compareData, index) {
-  if(index == 0) {
-    return standardData[0][0];
-  } else {
-    var points = getPointFromData(standardData, compareData, index);
-    return ((points[0].x * points[1].y - points[0].y * points[1].x) * (points[2].x - points[3].x) - (points[0].x - points[1].x) * (points[2].x * points[3].y - points[2].y * points[3].x)) / ((points[0].x - points[1].x) * (points[2].y - points[3].y) - (points[0].y - points[1].y) * (points[2].x - points[3].x));    
-  }
+  console.log("x : " + resultPoint.x);
+  return resultPoint;
 }
