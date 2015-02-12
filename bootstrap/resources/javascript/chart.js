@@ -62,7 +62,8 @@ charts[0] = {
     // 차트의 navigator 관리 
     navigator : {
         enabled : false
-    }
+    },
+    series: null
   }
 };
 
@@ -161,24 +162,22 @@ charts[1] = {
       }],
       shape: 'squarepin'
     }]
-    // series : data
   }
 }
 
+var series = [];
 // -------------------------- chart-1 관련 메소드 --------------------------
-$(document).on('ready page:load', function() {
+$(document).on('ready', function() {
   var selectViewHandler = {},
       selectTypeHandler = {};
       
   selectViewHandler['site'] = function(){
-    var chart = charts[0],
-        option = chart.option,
-        title = $('[data-selectbox-title]');
+    var title = $('[data-selectbox-title]');
     makeCheckBox(6);
     title.text('Site: ');
 
     //데이터 받는 곳 (수정요망)
-    option.series = [{
+    series[0] = [{
       name : 'Level 1',
       data : makeData()
     },{
@@ -194,16 +193,14 @@ $(document).on('ready page:load', function() {
       name : 'Level 5',
       data : makeData()
     }];
-    drawChart(chart, option);
+    drawChart(0);
   };
 
   selectViewHandler['depth'] = function(){
-    var chart = charts[0],
-        option = chart.option,
-        title = $('[data-selectbox-title]');
+    var title = $('[data-selectbox-title]');
     makeCheckBox(5);
     title.text('Depth: ');
-    option.series = [{
+    series[0] = [{
       name : 'Level 1',
       data : makeData()
     },{
@@ -219,19 +216,17 @@ $(document).on('ready page:load', function() {
       name : 'Level 5',
       data : makeData()
     } ];
-    drawChart(chart, option);
+    drawChart(0);
   };
 
   selectTypeHandler['temperature'] = function() {
-    var chart = charts[0],
-        option = chart.option,
-        yAxis = {
+    var yAxis = {
           title: {
             text: 'Temperature (°C)'
           },
           opposite: false
         };
-    option.series = [{
+      series[0] = [{
       name : 'Level 1',
       data : makeData()
     },{
@@ -247,20 +242,18 @@ $(document).on('ready page:load', function() {
       name : 'Level 5',
       data : makeData()
     } ];
-    option.yAxis = yAxis;
-    drawChart(chart, option);
+    charts[0].option.yAxis = yAxis;
+    drawChart(0);
   };
 
   selectTypeHandler['moisture'] = function() {  
-    var chart = charts[0],
-        option = chart.option,
-        yAxis = {
+    var yAxis = {
           title: {
             text: 'Moisture'
           },
           opposite: false
         };
-    option.series = [{
+      series[0] = [{
       name : 'Level 1',
       data : makeData()
     },{
@@ -276,14 +269,9 @@ $(document).on('ready page:load', function() {
       name : 'Level 5',
       data : makeData()
     } ];
-    option.yAxis = yAxis;
-    drawChart(chart, option);
+    charts[0].option.yAxis = yAxis;
+    drawChart(0);
   };
-
-  function drawChart(chart, option){
-    chart.target.highcharts('StockChart', option);
-    chart.object = chart.target.highcharts();
-  }
 
   $('[data-event-change-view-option]').on('change', function(){
     var selectedValue = $(this).val();
@@ -342,6 +330,7 @@ function makeData(){
     item = [Date.UTC(1970, 0, i + 1), Math.random()];
     data[i] = item;
   }
+  console.log("makeDB");
   return data;
 }
 
@@ -364,16 +353,14 @@ charts[0].option.series = [{
 
 // -------------------------- chart 초기 그리기 --------------------------
 $(function () {
-  charts[0].target.highcharts('StockChart', charts[0].option);
-  charts[0].object = charts[0].target.highcharts();
+  drawChart(0);
   
   var standardData = charts[1].option.series[0].data,
       compareData = charts[1].option.series[1].data;
  
   charts[1].option.xAxis.plotBands = getPlotBandsGapTemperature(standardData, compareData, true);
 
-  charts[1].target.highcharts('StockChart', charts[1].option);
-  charts[1].object = charts[1].target.highcharts();
+  drawChart(1);
 
 });
 
@@ -441,4 +428,11 @@ function calCrossing(standardData, compareData, index) {
     var points = getPointFromData(standardData, compareData, index);
     return ((points[0].x * points[1].y - points[0].y * points[1].x) * (points[2].x - points[3].x) - (points[0].x - points[1].x) * (points[2].x * points[3].y - points[2].y * points[3].x)) / ((points[0].x - points[1].x) * (points[2].y - points[3].y) - (points[0].y - points[1].y) * (points[2].x - points[3].x));    
   }
+}
+
+function drawChart(index){
+    console.dir(series[index]);
+    charts[index].option.series = series[index];
+    charts[index].target.highcharts('StockChart', charts[index].option);
+    charts[index].object = charts[index].target.highcharts();
 }
