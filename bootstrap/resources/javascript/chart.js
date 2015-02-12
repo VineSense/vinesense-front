@@ -6,6 +6,7 @@ charts[0] = {
   target: $('#chart-1'),
   object: null,
   option: {
+    viewDay: 12,
     chart : {
       height: 200,
       type: 'spline'
@@ -71,6 +72,7 @@ charts[1] = {
   target: $('#chart-2'),
   object: null,
   option: {
+    viewDay: 365,
     // 차트의 전반적인 내용 관리 
     chart : {
       height: 200,
@@ -165,7 +167,6 @@ charts[1] = {
   }
 }
 
-var series = [];
 // -------------------------- chart-1 관련 메소드 --------------------------
 $(document).on('ready', function() {
   var selectViewHandler = {},
@@ -177,7 +178,7 @@ $(document).on('ready', function() {
     title.text('Site: ');
 
     //데이터 받는 곳 (수정요망)
-    series[0] = [{
+    charts[0].option.series = [{
       name : 'Level 1',
       data : makeData()
     },{
@@ -193,6 +194,7 @@ $(document).on('ready', function() {
       name : 'Level 5',
       data : makeData()
     }];
+    console.dir(charts);
     drawChart(0);
   };
 
@@ -200,7 +202,7 @@ $(document).on('ready', function() {
     var title = $('[data-selectbox-title]');
     makeCheckBox(5);
     title.text('Depth: ');
-    series[0] = [{
+    charts[0].option.series = [{
       name : 'Level 1',
       data : makeData()
     },{
@@ -226,7 +228,7 @@ $(document).on('ready', function() {
           },
           opposite: false
         };
-      series[0] = [{
+    charts[0].option.series = [{
       name : 'Level 1',
       data : makeData()
     },{
@@ -253,7 +255,7 @@ $(document).on('ready', function() {
           },
           opposite: false
         };
-      series[0] = [{
+    charts[0].option.series = [{
       name : 'Level 1',
       data : makeData()
     },{
@@ -280,7 +282,22 @@ $(document).on('ready', function() {
 
   $('[data-event-change-view-day]').on('change', function(){
     var selectedValue = $(this).val();
-    selectViewRange(selectedValue);
+    charts[0].option.viewDay = selectedValue;
+    selectViewRange(0, selectedValue);
+  });
+
+  $('[data-event-change-compare-temperature]').on('change', function(){
+    var selectedValue = $(this).val(),
+        standardData = charts[1].option.series[0].data,
+        compareData = charts[1].option.series[1].data;
+
+    console.log("asdf");
+    if(selectedValue == 'high') {
+      charts[1].option.xAxis.plotBands = getPlotBandsGapTemperature(standardData, compareData, false);
+    } else {
+      charts[1].option.xAxis.plotBands = getPlotBandsGapTemperature(standardData, compareData, true);
+    }
+    drawChart(1);
   });
 
   $('[data-event-change-type]').on('change', function(){
@@ -330,7 +347,6 @@ function makeData(){
     item = [Date.UTC(1970, 0, i + 1), Math.random()];
     data[i] = item;
   }
-  console.log("makeDB");
   return data;
 }
 
@@ -363,11 +379,6 @@ $(function () {
   drawChart(1);
 
 });
-
-function selectViewRange(day) {
-  charts[0].object.xAxis[0].setExtremes(Date.UTC(1970, 0, 366 - day), Date.UTC(1970, 0, 365));
-}
-
 
 // 온도차이에 구간 구하는 함수 
 function getPlotBandsGapTemperature(standardData, compareData, optionLow) {
@@ -431,8 +442,13 @@ function calCrossing(standardData, compareData, index) {
 }
 
 function drawChart(index){
-    console.dir(series[index]);
-    charts[index].option.series = series[index];
-    charts[index].target.highcharts('StockChart', charts[index].option);
-    charts[index].object = charts[index].target.highcharts();
+  var option = jQuery.extend({}, charts[index].option);
+  charts[index].target.highcharts('StockChart', charts[index].option);
+  charts[index].object = charts[index].target.highcharts();
+  charts[index].option = option;
+  selectViewRange(index, charts[index].option.viewDay);
+}
+
+function selectViewRange(index, day) {
+  charts[index].object.xAxis[0].setExtremes(Date.UTC(1970, 0, 366 - day), Date.UTC(1970, 0, 365));
 }
