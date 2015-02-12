@@ -384,7 +384,6 @@ table.dataTable thead .sorting:after {
     border: 1px solid #ccc;
 
     /*수정 할 것*/
-    margin-left: 60px;
 }
 
 .side-menu-bottom-items {
@@ -409,4 +408,8 @@ table.dataTable thead .sorting:after {
 
 .panel-item-toggle-btn {
     margin-top: -2px;
+}
+
+.daterangepicker-wrapper {
+    margin: 0 auto ! important;
 }
