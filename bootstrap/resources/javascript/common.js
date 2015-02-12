@@ -37,12 +37,35 @@ vinesense = {
         }
     },
 
+    selectBottomSideMenuBtnHandler : {
+        'all' : function() {
+//            $('[data-bottom-side-menu-list]').css('background-color', 'white');
+        },
+
+        'budBreak' : function() {
+
+        },
+
+        'flowering' : function() {
+
+        },
+
+        'veraison' : function() {
+
+        },
+
+        'harvest' : function() {
+
+        }
+    },
+
     init : function() {
       this.addEventListener();
     },
 
     addEventListener : function() {
         this.togglePanelWindow();
+        this.toggleBottomSideMenuColor();
     },
 
     togglePanelWindow : function() {
@@ -69,6 +92,13 @@ vinesense = {
         }
 
         drawChart(index);
+    },
+
+    toggleBottomSideMenuColor : function() {
+        $('[data-event-change-chart-section]').on('click', function () {
+            var selectedValue = $(this).attr('data-event-change-chart-section');
+            vinesense.selectBottomSideMenuBtnHandler[selectedValue]();
+        });
     }
 }
 

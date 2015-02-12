@@ -387,7 +387,7 @@ table.dataTable thead .sorting:after {
 }
 
 .side-menu-bottom-items {
-    height : 230px;
+    height : 265px;
     text-align: center;
 }
 
@@ -400,10 +400,14 @@ table.dataTable thead .sorting:after {
     margin-bottom: 10px;
 }
 
+.side-menu-bottom-item-datepicker > .btn-group {
+    float: right;
+}
+
 .side-menu-bottom-item-info {
     overflow-x:hidden;
     overflow-y:auto;
-    height: 170px;
+    height: 205px;
 }
 
 .panel-item-toggle-btn {

@@ -154,13 +154,16 @@ charts[1] = {
       // name: 'Flags on axis',
       data: [{
           x: Date.UTC(1970, 3, 1),
-          title: '씨뿌리는기간'
+          title: 'Bud Break'
       }, {
           x: Date.UTC(1970, 6, 1),
-          title: '꽃피는기간'
+          title: 'Flowering/fruit set'
+      }, {
+          x: Date.UTC(1970, 8, 1),
+          title: 'Veraison'
       }, {
           x: Date.UTC(1970, 9, 1),
-          title: '추수기간'
+          title: 'Harvest'
       }],
       shape: 'squarepin'
     }]
@@ -291,7 +294,6 @@ $(document).on('ready', function() {
         standardData = charts[1].option.series[0].data,
         compareData = charts[1].option.series[1].data;
 
-    console.log("asdf");
     if(selectedValue == 'high') {
       charts[1].option.xAxis.plotBands = getPlotBandsGapTemperature(standardData, compareData, false);
     } else {
@@ -374,7 +376,7 @@ $(function () {
   var standardData = charts[1].option.series[0].data,
       compareData = charts[1].option.series[1].data;
  
-  charts[1].option.xAxis.plotBands = getPlotBandsGapTemperature(standardData, compareData, true);
+  charts[1].option.xAxis.plotBands = getPlotBandsGapTemperature(standardData, compareData);
 
   drawChart(1);
 

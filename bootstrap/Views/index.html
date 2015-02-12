@@ -57,7 +57,7 @@
         <div class="col-lg-8" id="chart-1-panel">
           <div class="panel panel-default">
             <div class="panel-heading">
-                <i class="fa fa-clock-o fa-fw"></i> chart1
+                <i class="fa fa-clock-o fa-fw"></i> Underground
                 <button class="btn btn-default btn-sm panel-item-toggle-btn pull-right" data-event-change-panel="chart-1">
                     <span class="glyphicon glyphicon-resize-full pull-right" id="chart-1-span" aria-hidden="true"></span>
                 </button>
@@ -189,14 +189,23 @@
         <div class="col-lg-8" id="chart-2-panel">
           <div class="panel panel-default">
             <div class="panel-heading">
-                <i class="fa fa-clock-o fa-fw"></i> chart2
+                <i class="fa fa-clock-o fa-fw"></i> Outside
                 <button class="btn btn-default btn-sm panel-item-toggle-btn pull-right" data-event-change-panel="chart-2">
                     <span class="glyphicon glyphicon-resize-full pull-right" id="chart-2-span" aria-hidden="true"></span>
                 </button>
             </div>
             <!-- /.panel-heading -->
             <div class="panel-body">
-                    <div class="side-menu-bottom-item-datepicker">
+                    <div class="side-menu-bottom-item-datepicker" >
+                        <div class="btn-group" data-toggle="buttons">
+                            <label class="btn btn-default active">
+                                <input type="radio" data-event-change-compare-temperature name="data-event-change-compare-temperature" value="high" checked>High
+                            </label>
+                            <label class="btn btn-default">
+                                <input type="radio" data-event-change-compare-temperature name="data-event-change-compare-temperature" value="low">Low
+                            </label>
+                        </div>
+
                         <select>
                             <option>2010</option>
                             <option>2011</option>
@@ -216,15 +225,6 @@
                         </select>
                     </div>
 
-                    <div class="btn-group" data-toggle="buttons">
-                    <label class="btn btn-default active">
-                        <input type="radio" data-event-change-compare-temperature name="data-event-change-compare-temperature" value="high" checked>High
-                    </label>
-                    <label class="btn btn-default">
-                        <input type="radio" data-event-change-compare-temperature name="data-event-change-compare-temperature" value="low">Low
-                    </label>
-                </div>
-
                 <div id="chart-2"></div>
             </div>
             <!-- /.panel-body -->
@@ -240,23 +240,26 @@
             <div class="panel-body side-menu-bottom-items">
                 <div class="side-menu-bottom-item">
                     <div class="btn-group" data-toggle="buttons">
-                        <label class="btn btn-default btn-sm active">
-                            <input type="radio" data-event-change-chart-section name="data-event-change-chart-section" value="temperature" checked> 전체
+                        <label class="btn btn-default btn-sm active" data-event-change-chart-section="all" >
+                            <input type="radio" name="data-event-change-chart-section" checked> All
                         </label>
-                        <label class="btn btn-default btn-sm">
-                            <input type="radio" data-event-change-chart-section name="data-event-change-chart-section" value="temperature"> 씨뿌리는 시기
+                        <label class="btn btn-default btn-sm" data-event-change-chart-section="budBreak" >
+                            <input type="radio" name="data-event-change-chart-section"> Bud Break
                         </label>
-                        <label class="btn btn-default btn-sm">
-                            <input type="radio" data-event-change-chart-section name="data-event-change-chart-section" value="temperature"> 꽃피는 시기
+                        <label class="btn btn-default btn-sm" data-event-change-chart-section="flowering" >
+                            <input type="radio" name="data-event-change-chart-section"> Flowering/fruit set
                         </label>
-                        <label class="btn btn-default btn-sm">
-                            <input type="radio" data-event-change-chart-section name="data-event-change-chart-section" value="temperature"> 추수 시기
+                        <label class="btn btn-default btn-sm" data-event-change-chart-section="veraison" >
+                            <input type="radio" name="data-event-change-chart-section"> Veraison
+                        </label>
+                        <label class="btn btn-default btn-sm" data-event-change-chart-section="harvest" >
+                            <input type="radio" name="data-event-change-chart-section"> Harvest
                         </label>
                     </div>
                 </div>
 
                 <div class="side-menu-bottom-item-info">
-                    <ul class="list-unstyled">
+                    <ul class="list-unstyled" data-bottom-side-menu-list>
                         <li>높은온도 : 100일</li>
                         <li>2015.01.02 ~ 2015.02.02 : +4°C (평균온도 : 10°C)</li>
                         <li>2015.01.02 ~ 2015.02.02 : +4°C (평균온도 : 10°C)</li>
