@@ -9,7 +9,7 @@ charts[0] = {
     viewDay: 12,
     chart : {
       height: 200,
-      type: 'spline'
+      type: 'line'
     },
     // 차트의 제목 관리 
     title : {
@@ -17,6 +17,9 @@ charts[0] = {
     },
     // 차트의 x축 관리 
     xAxis: {
+      dateTimeLabelFormats: { // don't display the dummy year
+          month: '%e/%b',
+      },
       events:{
         setExtremes: function(e){}
       }
@@ -72,7 +75,7 @@ charts[1] = {
   target: $('#chart-2'),
   object: null,
   option: {
-    viewDay: 365,
+    viewDay: 364,
     // 차트의 전반적인 내용 관리 
     chart : {
       height: 200,
@@ -95,10 +98,7 @@ charts[1] = {
           text: 'Date'
       },
       events:{
-        setExtremes: function(e){
-          console.log( "min : " + Highcharts.dateFormat(null, e.min));
-          console.log( "max : " + Highcharts.dateFormat(null, e.max));
-        }
+        setExtremes: function(e){}
       }
     },
     // 차트의 y축 관리 
@@ -154,21 +154,28 @@ charts[1] = {
       // name: 'Flags on axis',
       data: [{
           x: Date.UTC(1970, 3, 1),
-          title: 'Bud Break'
+          title: '씨뿌리는기간'
       }, {
           x: Date.UTC(1970, 6, 1),
-          title: 'Flowering/fruit set'
-      }, {
-          x: Date.UTC(1970, 8, 1),
-          title: 'Veraison'
+          title: '꽃피는기간'
       }, {
           x: Date.UTC(1970, 9, 1),
-          title: 'Harvest'
+          title: '추수기간'
       }],
       shape: 'squarepin'
     }]
   }
-}
+};
+
+
+var state = {
+  sensorType: "temperature",
+  begin: null,
+  end: null,
+  interval: 1,
+  siteId: 1
+};
+
 
 // -------------------------- chart-1 관련 메소드 --------------------------
 $(document).on('ready', function() {
@@ -179,49 +186,16 @@ $(document).on('ready', function() {
     var title = $('[data-selectbox-title]');
     makeCheckBox(6);
     title.text('Site: ');
-
-    //데이터 받는 곳 (수정요망)
-    charts[0].option.series = [{
-      name : 'Level 1',
-      data : makeData()
-    },{
-      name : 'Level 2',
-      data : makeData()
-    },{
-      name : 'Level 3',
-      data : makeData()
-    },{
-      name : 'Level 4',
-      data : makeData()
-    },{
-      name : 'Level 5',
-      data : makeData()
-    }];
-    console.dir(charts);
-    drawChart(0);
+    name = "Depth";
+    request(host + '/api/Logs/GetRangeBySiteId',state, getRangeHandler);
   };
 
   selectViewHandler['depth'] = function(){
     var title = $('[data-selectbox-title]');
     makeCheckBox(5);
     title.text('Depth: ');
-    charts[0].option.series = [{
-      name : 'Level 1',
-      data : makeData()
-    },{
-      name : 'Level 2',
-      data : makeData()
-    },{
-      name : 'Level 3',
-      data : makeData()
-    },{
-      name : 'Level 4',
-      data : makeData()
-    },{
-      name : 'Level 5',
-      data : makeData()
-    } ];
-    drawChart(0);
+    name = "Site";
+    request(host + '/api/Logs/GetRangeByDepth', state, getRangeHandler);
   };
 
   selectTypeHandler['temperature'] = function() {
@@ -231,24 +205,9 @@ $(document).on('ready', function() {
           },
           opposite: false
         };
-    charts[0].option.series = [{
-      name : 'Level 1',
-      data : makeData()
-    },{
-      name : 'Level 2',
-      data : makeData()
-    },{
-      name : 'Level 3',
-      data : makeData()
-    },{
-      name : 'Level 4',
-      data : makeData()
-    },{
-      name : 'Level 5',
-      data : makeData()
-    } ];
     charts[0].option.yAxis = yAxis;
-    drawChart(0);
+    state.sensorType = "temperature";
+    request(host + '/api/Logs/GetRangeByDepth', state, getRangeHandler);
   };
 
   selectTypeHandler['moisture'] = function() {  
@@ -258,24 +217,9 @@ $(document).on('ready', function() {
           },
           opposite: false
         };
-    charts[0].option.series = [{
-      name : 'Level 1',
-      data : makeData()
-    },{
-      name : 'Level 2',
-      data : makeData()
-    },{
-      name : 'Level 3',
-      data : makeData()
-    },{
-      name : 'Level 4',
-      data : makeData()
-    },{
-      name : 'Level 5',
-      data : makeData()
-    } ];
     charts[0].option.yAxis = yAxis;
-    drawChart(0);
+    state.sensorType = "moisture";
+    request(host + '/api/Logs/GetRangeByDepth', state, getRangeHandler);
   };
 
   $('[data-event-change-view-option]').on('change', function(){
@@ -312,8 +256,6 @@ $(document).on('ready', function() {
         isChecked = target.is(':checked'),
         level = target.attr('data-event-check'), 
         chartObject = charts[0].object;
-
-    console.dir(chartObject);
     if(isChecked) {
         chartObject.series[level].show();
     } else {
@@ -346,7 +288,7 @@ function makeData(){
   var data = [],
       item;
   for(var i = 0 ; i < 365 ; i++) {
-    item = [Date.UTC(1970, 0, i + 1), Math.random()];
+    item = [Date.UTC(2014, 5, i + 24), Math.random()];
     data[i] = item;
   }
   return data;
@@ -376,7 +318,7 @@ $(function () {
   var standardData = charts[1].option.series[0].data,
       compareData = charts[1].option.series[1].data;
  
-  charts[1].option.xAxis.plotBands = getPlotBandsGapTemperature(standardData, compareData);
+  charts[1].option.xAxis.plotBands = getPlotBandsGapTemperature(standardData, compareData, true);
 
   drawChart(1);
 
@@ -386,71 +328,93 @@ $(function () {
 function getPlotBandsGapTemperature(standardData, compareData, optionLow) {
   var plotBands = [],
       i,
-      length = standardData.length,
+      length = standardData.length > compareData.length ? standardData.length : compareData.length,
       isBiging = false,
-      j = 0;
+      j = 0,
+      standardDataIndex = 0,
+      compareDataIndex = 0;
 
   optionLow = optionLow || false;
 
-  for(i = 0 ; i < length ; i++) {
-    if(!isBiging && ((standardData[i][1] >= compareData[i][1]) ^ optionLow)) {
+  while(compareDataIndex < compareData.length && standardDataIndex < standardData.length) {
+    if(standardData[standardDataIndex][0] > compareData[compareDataIndex][0]) {
+      compareDataIndex++;
+      continue;
+    } else if(standardData[standardDataIndex][0] < compareData[compareDataIndex][0]){
+      standardDataIndex++;
+      continue;
+    }
+    if(!isBiging && ((standardData[standardDataIndex][1] >= compareData[compareDataIndex][1]) ^ optionLow)) {
       isBiging = true;
       plotBands[j] = {
-        from: calCrossing(standardData, compareData, i),
+        from: calCrossing(standardData, compareData, standardDataIndex, compareDataIndex),
         color: optionLow ? 'rgba(0, 0, 255, .6)' : 'rgba(255, 0, 0, .6)'
       };
-    } else if(isBiging && ((standardData[i][1] <= compareData[i][1]) ^ optionLow)) {
+    } else if(isBiging && ((standardData[standardDataIndex][1] <= compareData[compareDataIndex][1]) ^ optionLow)) {
       isBiging = false;
-      plotBands[j].to = calCrossing(standardData, compareData, i);
+      plotBands[j].to = calCrossing(standardData, compareData, standardDataIndex, compareDataIndex);
       j++;
     }
+    compareDataIndex++;
+    standardDataIndex++;
   }
   return plotBands;
 }
 
 // 데이터로부터 점가져오는 함수 
-function getPointFromData(standardData, compareData, index) {
+function getPointFromData(standardData, compareData, standardDataIndex, compareDataIndex) {
   var points = [];
   points[0] = {
-    x: standardData[index-1][0],
-    y: standardData[index-1][1]  
+    x: standardData[standardDataIndex-1][0],
+    y: standardData[standardDataIndex-1][1]  
   };
 
   points[1] = {
-    x: standardData[index][0],
-    y: standardData[index][1]  
+    x: standardData[standardDataIndex][0],
+    y: standardData[standardDataIndex][1]  
   };
 
   points[2] = {
-    x: compareData[index-1][0],
-    y: compareData[index-1][1]
+    x: compareData[compareDataIndex-1][0],
+    y: compareData[compareDataIndex-1][1]
   };
   
   points[3] = {
-    x: compareData[index][0],
-    y: compareData[index][1]
+    x: compareData[compareDataIndex][0],
+    y: compareData[compareDataIndex][1]
   };
   return points;
 }
 
 // 온도차이에 교차하는 점 구하는 함수 
-function calCrossing(standardData, compareData, index) {
-  if(index == 0) {
+function calCrossing(standardData, compareData, standardDataIndex, compareDataIndex) {
+  if(standardDataIndex == 0) {
     return standardData[0][0];
+  } else if(compareDataIndex == 0) {
+    return compareData[0][0];
   } else {
-    var points = getPointFromData(standardData, compareData, index);
+    var points = getPointFromData(standardData, compareData, standardDataIndex, compareDataIndex);
     return ((points[0].x * points[1].y - points[0].y * points[1].x) * (points[2].x - points[3].x) - (points[0].x - points[1].x) * (points[2].x * points[3].y - points[2].y * points[3].x)) / ((points[0].x - points[1].x) * (points[2].y - points[3].y) - (points[0].y - points[1].y) * (points[2].x - points[3].x));    
   }
 }
 
 function drawChart(index){
-  var option = jQuery.extend({}, charts[index].option);
+  var series = charts[index].option.series;
   charts[index].target.highcharts('StockChart', charts[index].option);
   charts[index].object = charts[index].target.highcharts();
-  charts[index].option = option;
-  selectViewRange(index, charts[index].option.viewDay);
+  charts[index].option.series = series;
+  // selectViewRange(index, charts[index].option.viewDay);
 }
 
 function selectViewRange(index, day) {
-  charts[index].object.xAxis[0].setExtremes(Date.UTC(1970, 0, 366 - day), Date.UTC(1970, 0, 365));
+  var data = charts[index].option.series[0].data,
+      length = data.length;
+
+  day = day > length ? length - 1 : day;
+
+  console.log('day : ' + day);
+  var startDate = data[length - 1 - day][0],
+      endDate = data[length - 1][0];
+      
+  charts[index].object.xAxis[0].setExtremes(startDate, endDate);
 }
