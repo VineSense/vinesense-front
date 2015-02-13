@@ -35,7 +35,7 @@ charts[0] = {
       enabled : false
     },
     plotOptions: {
-      line: {
+      spline: {
         marker: {
           enabled: false
         },
@@ -332,12 +332,6 @@ $(document).on('ready', function() {
     }
     dataCheckboxGroup.append(template);
   }
-
-// -------------------------- date-picker 관련 메소드 --------------------------
-    $('#reportrange2 span').html(moment().subtract(29, 'days').format('MMMM D, YYYY') + ' - ' + moment().format('MMMM D, YYYY'));
-    $('#reportrange2').daterangepicker({
-        opens: 'center'
-    });
 });
 
 // -------------------------- 나중에 지울 것  --------------------------
@@ -397,7 +391,7 @@ function getPlotBandsGapTemperature(standardData, compareData, optionLow) {
       isBiging = true;
       plotBands[j] = {
         from: calCrossing(standardData, compareData, i),
-        color: optionLow ? 'rgba(0, 0, 255, .6)' : 'rgba(255, 0, 0, .6)'
+        color: optionLow ? 'rgba(28, 186, 188, .6)' : 'rgba(206, 89, 115, .6)'
       };
     } else if(isBiging && ((standardData[i][1] <= compareData[i][1]) ^ optionLow)) {
       isBiging = false;
