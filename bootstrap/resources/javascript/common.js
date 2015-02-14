@@ -65,7 +65,6 @@ vinesense = {
 
     addEventListener : function() {
         this.togglePanelWindow();
-        this.toggleBottomSideMenuColor();
     },
 
     togglePanelWindow : function() {
@@ -90,15 +89,7 @@ vinesense = {
             mainSpan.addClass('glyphicon-resize-full');
             sidePanel.show();
         }
-
-        drawChart(index);
-    },
-
-    toggleBottomSideMenuColor : function() {
-        $('[data-event-change-chart-section]').on('click', function () {
-            var selectedValue = $(this).attr('data-event-change-chart-section');
-            vinesense.selectBottomSideMenuBtnHandler[selectedValue]();
-        });
+        charts[index].method.drawChart(true);
     }
 }
 
