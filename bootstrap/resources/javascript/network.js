@@ -101,24 +101,37 @@ var chart2Handler = {
 
     for(var i = 0, length = res.result.length ; i < length ; i++) {
       var convertedData = [],
-          resultData = res.result[i].data;
-      for(var j = 0, dataLength = res.result[i].data.length ; j < dataLength ; j++) {
+          resultData = res.result[i].data,
+          j;
+      for(j = 0, dataLength = res.result[i].data.length ; j < dataLength ; j++) {
         convertedData[j] = [Date.UTC(2012, 0, moment(resultData[j][0]).dayOfYear()), resultData[j][1]];
+      }
+
+      if(i == 1) {
+        makeData(convertedData, moment(resultData[j - 1][0]), j);
       }
       chart2.option.series[i] = {
         name: res.result[i].tag,
         data: convertedData
       };
     }
+
+    chart2.method.setFlag();
     
     standardData = chart2.option.series[0].data;
     compareData = chart2.option.series[1].data;
 
-    chart2.option.xAxis.plotBands = getPlotBandsGapTemperature(standardData, compareData);
+    chart2.information.section.high = getPlotBandsGapTemperature(standardData, compareData, false);
+    chart2.information.section.low = getPlotBandsGapTemperature(standardData, compareData, true);
+
+    chart2.option.xAxis.plotBands = chart2.information.section.high.plotBands;
     chart2.method.drawChart();
     blockUI.unblock();
   }
 };
+
+
+
 
 $(document).on('ready page:load', function() {
   for(var i = 0, length = serverInformation.siteNumber ; i < length ; i++) {
@@ -127,3 +140,39 @@ $(document).on('ready page:load', function() {
   serverAjaxRequest['depth']();
   serverAjaxRequest['weather']();
 });
+
+
+
+startYear = parseInt(moment(serverInformation.minDate).format("YYYY"));
+yesterYear = parseInt(moment().subtract(1, 'y').format("YYYY"));
+endYear = parseInt(moment().format("YYYY"));
+
+var yearSelectTemplate = '';
+
+
+for(var year = startYear ; year <= endYear ; year++) {
+  yearSelectTemplate += '<option value=' + year + '>' + year +'</option>';
+}
+
+$('#data-compare-year').html(yearSelectTemplate);
+$('#data-standard-year').html(yearSelectTemplate);
+
+$('#data-compare-year').find('[value="' + yesterYear + '"]').attr( "selected", 'selected' );
+$('#data-standard-year').find('[value="' + endYear + '"]').attr( "selected", 'selected' );
+
+
+
+
+function makeData(convertedData, resultData, j){
+  for(var i = 0 ; i <= 200 ; i++) {
+    convertedData[j] = [Date.UTC(2012, 0, moment(resultData).add(i, 'd').dayOfYear()), Math.random() * 100];
+    j++
+  }
+  return convertedData;
+}
+
+
+
+
+
+

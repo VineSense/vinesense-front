@@ -93,14 +93,14 @@ chart1.method.hideCheckBoxUnChecked = function() {
 };
 
 chart1.method.drawChart = function(isNotSetAxisMinMax){
-  var series,
-      xAxis;
+  var xAxis;
 
-  series = chart1.option.series;
+  var option = {};
 
-  chart1.target.highcharts('StockChart', chart1.option);
+  $.extend(option, chart1.option);
+
+  chart1.target.highcharts('StockChart', option);
   chart1.object = chart1.target.highcharts();
-  chart1.option.series = series;
   
   if(!isNotSetAxisMinMax){
     setXAxisMinMax(chart1.information.networkRequestParameter.interval);

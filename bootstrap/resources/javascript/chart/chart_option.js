@@ -4,7 +4,7 @@ var serverInformation = {
   host: 'http://vines.cloudapp.net/Nickel',
   minDate: '2014-05-24',
   siteNumber: 7,
-  depthNumber: 5,
+  depthNumber: 5
 };
 
 function createDefaultChart() {
@@ -18,7 +18,7 @@ function createDefaultChart() {
       }
     },
     option: {
-      chart : {
+      chart: {
         height: 200,
         zoomType: null,
         type: 'spline',
@@ -31,8 +31,8 @@ function createDefaultChart() {
           }
         }
       },
-      title : {
-        text : null
+      title: {
+        text: null
       },
       xAxis: {
         title: {
@@ -57,7 +57,7 @@ function createDefaultChart() {
         enabled: true
       },
       rangeSelector: { 
-        enabled : false
+        enabled: false
       },
       plotOptions: {
         spline: {
