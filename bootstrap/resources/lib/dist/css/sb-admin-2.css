@@ -424,6 +424,7 @@ table.dataTable thead .sorting:after {
 
 .side-menu-top-item-table th {
     width: 50px;
+    text-align: right;
 }
 
 .side-menu-top-item-table td {
