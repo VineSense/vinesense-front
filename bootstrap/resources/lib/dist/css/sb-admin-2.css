@@ -417,3 +417,16 @@ table.dataTable thead .sorting:after {
 .daterangepicker-wrapper {
     margin: 0 auto ! important;
 }
+
+.side-menu-top-item-table {
+    margin: 0 auto ! important;
+}
+
+.side-menu-top-item-table th {
+    width: 50px;
+}
+
+.side-menu-top-item-table td {
+    width: 30px;
+    padding: 0 5px 0 5px;
+}
