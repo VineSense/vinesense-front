@@ -33,7 +33,7 @@ var chart2 = createChartInformation($('#chart-2'),{
   }, { 
     gridLineWidth: 0,
     title: {
-      text: 'Rainfall',
+      text: 'Cusum',
       style: {
         color: Highcharts.getOptions().colors[0]
       }
@@ -158,11 +158,25 @@ chart2.method.setFlag = function() {
 
 var compareTemperatureHandler = {
   high: function() {
+    chart2.option.series[0] = {
+      name: 'Cusum',
+      type: 'column',
+      yAxis: 1,
+      data: chart2.information.section.high.points
+    };
+
     chart2.option.xAxis.plotBands = chart2.information.section.high.plotBands;
     chart2.information.section.checked = 'high';
   },
   low: function() {  
     chart2.option.xAxis.plotBands = chart2.information.section.low.plotBands;
+    chart2.option.series[0] = {
+      name: 'Cusum',
+      type: 'column',
+      yAxis: 1,
+      data: chart2.information.section.low.points
+    };
+
     chart2.information.section.checked = 'low';
   }
 };

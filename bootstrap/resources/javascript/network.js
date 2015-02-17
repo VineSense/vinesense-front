@@ -129,7 +129,7 @@ var chart2Handler = {
     chart2.option.series[2] = chart2.option.series[0];
 
     chart2.option.series[0] = {
-      name: '비교',
+      name: 'Cusum',
       type: 'column',
       yAxis: 1,
       data: chart2.information.section.high.points

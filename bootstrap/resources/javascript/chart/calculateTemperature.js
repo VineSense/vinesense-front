@@ -16,7 +16,7 @@ function getPlotBandsGapTemperature(standardData, compareData, optionLow) {
   data = [];
   onGoing = false;
   optionLow = optionLow || false;
-  j = standardDataIndex = compareDataIndex = 0;
+  k = j = standardDataIndex = compareDataIndex = 0;
   sectionColor = optionLow ? 'rgba(28, 186, 188, .6)' : 'rgba(206, 89, 115, .6)';
 
   while((compareDataIndex < compareData.length) && (standardDataIndex < standardData.length)) {
@@ -40,7 +40,7 @@ function getPlotBandsGapTemperature(standardData, compareData, optionLow) {
         compareAverageTemperature: compareData[compareDataIndex][1],
         days: 1
       };
-      points[k++] = [standardData[standardDataIndex + 1][0], Math.abs((standardData[standardDataIndex][1] - compareData[compareDataIndex][1]))];
+      points[k++] = [standardData[standardDataIndex][0], Math.abs((standardData[standardDataIndex][1] - compareData[compareDataIndex][1]))];
     } else if((onGoing) && ((standardData[standardDataIndex][1] <= compareData[compareDataIndex][1]) ^ optionLow)) {
       onGoing = false;
       plotBands[j].to = calCrossingPositon(standardData, compareData, standardDataIndex, compareDataIndex);
@@ -55,7 +55,8 @@ function getPlotBandsGapTemperature(standardData, compareData, optionLow) {
       data[j].compareAverageTemperature += compareData[compareDataIndex][1];
       data[j].days += 1;
 
-      points[k++] = [standardData[standardDataIndex + 1][0], Math.abs((standardData[standardDataIndex][1] - compareData[compareDataIndex][1]))];
+      var sum = points[k - 1][1] + Math.abs((standardData[standardDataIndex][1] - compareData[compareDataIndex][1])); 
+      points[k++] = [standardData[standardDataIndex][0], sum];
     }
     compareDataIndex++;
     standardDataIndex++;

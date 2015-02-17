@@ -19,7 +19,7 @@ function createDefaultChart() {
     },
     option: {
       chart: {
-        height: 300,
+        height: 200,
         zoomType: null,
         type: 'spline',
         resetZoomButton: {
