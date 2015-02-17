@@ -39,7 +39,7 @@ var chart2 = createChartInformation($('#chart-2'),{
       }
     },
     labels: {
-      format: '{value} inch',
+      format: '{value} (F)',
       style: {
         color: Highcharts.getOptions().colors[0]
       }

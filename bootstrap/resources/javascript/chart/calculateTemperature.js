@@ -2,14 +2,17 @@
 // 온도차이에 구간 구하는 함수 
 function getPlotBandsGapTemperature(standardData, compareData, optionLow) {
   var plotBands,
+      points,
       data,
       onGoing,
       j,
+      k,
       standardDataIndex,
       compareDataIndex,
       sectionColor;
 
   plotBands = [];
+  points = [];
   data = [];
   onGoing = false;
   optionLow = optionLow || false;
@@ -37,6 +40,7 @@ function getPlotBandsGapTemperature(standardData, compareData, optionLow) {
         compareAverageTemperature: compareData[compareDataIndex][1],
         days: 1
       };
+      points[k++] = [standardData[standardDataIndex + 1][0], Math.abs((standardData[standardDataIndex][1] - compareData[compareDataIndex][1]))];
     } else if((onGoing) && ((standardData[standardDataIndex][1] <= compareData[compareDataIndex][1]) ^ optionLow)) {
       onGoing = false;
       plotBands[j].to = calCrossingPositon(standardData, compareData, standardDataIndex, compareDataIndex);
@@ -50,6 +54,8 @@ function getPlotBandsGapTemperature(standardData, compareData, optionLow) {
       data[j].standardAverageTemperature += standardData[standardDataIndex][1];
       data[j].compareAverageTemperature += compareData[compareDataIndex][1];
       data[j].days += 1;
+
+      points[k++] = [standardData[standardDataIndex + 1][0], Math.abs((standardData[standardDataIndex][1] - compareData[compareDataIndex][1]))];
     }
     compareDataIndex++;
     standardDataIndex++;
@@ -68,7 +74,8 @@ function getPlotBandsGapTemperature(standardData, compareData, optionLow) {
 
   return { 
     plotBands: plotBands,
-    data: data
+    data: data,
+    points: points,
   };
 }
 

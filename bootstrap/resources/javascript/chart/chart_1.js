@@ -73,7 +73,7 @@ chart1.information = {
 chart1.method.checkboxChangeEventHandler = function() {
   var target = $(this);
       isChecked = target.is(':checked'),
-      index = target.attr('data-event-check');
+      index = parseInt(target.attr('data-event-check')) + 1;
 
   if(isChecked) {
     chart1.object.series[index].show();
@@ -145,6 +145,20 @@ chart1.method.drawChart = function(isNotSetAxisMinMax){
   chart1.method.selectViewRange(chart1, xAxis.min, xAxis.max);
   chart1.method.hideCheckBoxUnChecked();
 }
+
+chart1.method.onOffPrecipitationEventHandler = function(isNotSetAxisMinMax){
+  var selected = $(this).val();
+
+  if(selected == 'on') {
+    chart1.object.series[0].show();
+    chart1.information.checkboxsChecked[0] = true;
+  } else {
+    chart1.object.series[0].hide();
+    chart1.information.checkboxsChecked[0] = false;
+  }
+  
+};
+
 
 
 

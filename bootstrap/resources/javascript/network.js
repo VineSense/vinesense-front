@@ -62,7 +62,7 @@ var chart1Handler = {
       name: 'precipitation',
       type: 'column',
       yAxis: 1,
-      data: convertDateFormat(res.weather, 2)
+      data: convertDateFormat(res.weather)
     };
 
     for(var i = 1, j = 0, length = res.result.length ; i <= length ; i++, j++) {
@@ -70,7 +70,7 @@ var chart1Handler = {
         name: prefixName + names[j],
         type: 'spline',
         yAxis: 0,
-        data: convertDateFormat(res.result[j].data, 1)
+        data: convertDateFormat(res.result[j].data)
       }; 
     }
 
@@ -113,7 +113,8 @@ var chart2Handler = {
       }
       chart2.option.series[i] = {
         name: res.result[i].tag,
-        data: convertedData
+        data: convertedData,
+        yAxis: 0
       };
     }
 
@@ -125,13 +126,23 @@ var chart2Handler = {
     chart2.information.section.high = getPlotBandsGapTemperature(standardData, compareData, false);
     chart2.information.section.low = getPlotBandsGapTemperature(standardData, compareData, true);
 
+    chart2.option.series[2] = chart2.option.series[0];
+
+    chart2.option.series[0] = {
+      name: '비교',
+      type: 'column',
+      yAxis: 1,
+      data: chart2.information.section.high.points
+    };
+
+
     chart2.option.xAxis.plotBands = chart2.information.section.high.plotBands;
     chart2.method.drawChart();
     blockUI.unblock();
   }
 };
 
-function convertDateFormat(data, dataIndex) {
+function convertDateFormat(data) {
   var convertedData = [],
       day,
       month,
@@ -141,7 +152,7 @@ function convertDateFormat(data, dataIndex) {
     year =  moment(data[i][0]).get('year' );
     month = moment(data[i][0]).get('month');
     day =   moment(data[i][0]).dayOfYear();
-    convertedData[i] = [Date.UTC(year, 0, day), data[i][dataIndex]];
+    convertedData[i] = [Date.UTC(year, 0, day), data[i][1]];
   }
   return convertedData;
 }

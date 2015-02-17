@@ -73,6 +73,22 @@ function createDefaultChart() {
           },
           lineWidth: 2,
           showInLegend: true
+        },
+        column: {
+          marker: {
+            enabled: false
+          },
+          events: {
+            legendItemClick: function () {
+              return false; 
+            }
+          },
+          states: {
+            hover: {
+              lineWidth: 2
+            }
+          },
+          showInLegend: false
         }
       },
       navigator: {

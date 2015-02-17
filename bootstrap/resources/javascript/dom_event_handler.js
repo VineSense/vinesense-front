@@ -12,6 +12,8 @@ $(document).on('ready page:load', function() {
 
   $('[data-event-change-view-day]').on('change', charts[0].method.viewDayChangeEventHandler);
 
+  $('[data-event-on-off-precipitation]').on('change', charts[0].method.onOffPrecipitationEventHandler);
+
   $('[data-event-change-compare-temperature]').on('change', charts[1].method.compareTemperatureChangeHandler);
 
   $('[data-event-change-chart-section]').on('change', charts[1].method.chartSectionChangeHandler);
