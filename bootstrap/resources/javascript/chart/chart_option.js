@@ -19,7 +19,7 @@ function createDefaultChart() {
     },
     option: {
       chart: {
-        height: 200,
+        height: 300,
         zoomType: null,
         type: 'spline',
         resetZoomButton: {
@@ -38,16 +38,13 @@ function createDefaultChart() {
         title: {
             text: null
         },
-        labels: null,
+        type: 'datetime',
+        dateTimeLabelFormats: { // don't display the dummy year
+          day: '%m/%e'
+        },
         events:{
           setExtremes: function(e){}
         }
-      },
-      yAxis: {
-        title: {
-          text: null
-        },
-        opposite: false
       },
       legend: {
         layout: 'vertical',
@@ -84,7 +81,13 @@ function createDefaultChart() {
       tooltip: {
         valueDecimals: 2,
         shared: true,
-        valueSuffix: null
+        valueSuffix: null,
+
+        backgroundColor: '#FCFFC5',
+        borderColor: 'black',
+        borderRadius: 10,
+        borderWidth: 2,
+        padding: 10
       },
       exporting: { 
         enabled: false 

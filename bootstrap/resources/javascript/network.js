@@ -58,21 +58,22 @@ var chart1Handler = {
         month,
         day;
     
-    for(var i = 0, length = res.result.length ; i < length ; i++) {
-      var convertedData = [],
-          resultData = res.result[i].data;
-      for(var j = 0, dataLength = res.result[i].data.length ; j < dataLength ; j++) {
-        year =  moment(resultData[j][0]).get('year' );
-        month = moment(resultData[j][0]).get('month');
-        day =   moment(resultData[j][0]).dayOfYear();
+    series[0] = {
+      name: 'precipitation',
+      type: 'column',
+      yAxis: 1,
+      data: convertDateFormat(res.weather, 2)
+    };
 
-        convertedData[j] = [Date.UTC(year, 0, day), resultData[j][1]];
-      }
+    for(var i = 1, j = 0, length = res.result.length ; i <= length ; i++, j++) {
       series[i] = {
-        name: prefixName + names[i],
-        data: convertedData
+        name: prefixName + names[j],
+        type: 'spline',
+        yAxis: 0,
+        data: convertDateFormat(res.result[j].data, 1)
       }; 
     }
+
     chart1.option.series = series;
     chart1.method.drawChart();
     blockUI.unblock();
@@ -130,7 +131,20 @@ var chart2Handler = {
   }
 };
 
+function convertDateFormat(data, dataIndex) {
+  var convertedData = [],
+      day,
+      month,
+      year;
 
+  for(var i = 0, dataLength = data.length ; i < dataLength ; i++) {
+    year =  moment(data[i][0]).get('year' );
+    month = moment(data[i][0]).get('month');
+    day =   moment(data[i][0]).dayOfYear();
+    convertedData[i] = [Date.UTC(year, 0, day), data[i][dataIndex]];
+  }
+  return convertedData;
+}
 
 
 $(document).on('ready page:load', function() {

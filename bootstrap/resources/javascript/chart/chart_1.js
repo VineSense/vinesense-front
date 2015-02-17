@@ -1,27 +1,56 @@
 
 // createChart-1
 var chart1 = createChartInformation($('#chart-1'), {
+  chart: {
+    zoomType: 'x'
+  },
   xAxis: {
     title: {
-        text: 'Date'
-    },
-    labels: {
-      formatter: function () {
-        return Highcharts.dateFormat('%d/%m', this.value);
-      }
+        text: null
     },
     events:{
       setExtremes: function(e){
         chart1.information.xAxis.min = e.min;
         chart1.information.xAxis.max = e.max;
+        chart1.object.xAxis[0].setTitle({ text: moment(e.min).get('year') });
       }
     }
   },
-  yAxis: {
+  yAxis: [{ // Primary yAxis
+    labels: {
+      format: '{value}',
+      style: {
+        color: Highcharts.getOptions().colors[1]
+      }
+    },
     title: {
-      text: 'Temperature (°C)'  
+      text: 'Temp. (F)',
+      style: {
+        color: Highcharts.getOptions().colors[1]
+      }
+    },
+    opposite: false
+  }, { 
+    gridLineWidth: 0,
+    title: {
+      text: 'Rainfall',
+      style: {
+        color: Highcharts.getOptions().colors[0]
+      }
+    },
+    labels: {
+      format: '{value} inch',
+      style: {
+        color: Highcharts.getOptions().colors[0]
+      }
     }
-  } 
+  }],
+  tooltip: {
+    useHTML: true,
+    xDateFormat: '%m/%d/%Y',
+    headerFormat: '<b>{point.key}</b></br></br>',
+    shared: true
+  },
 });
 
 chart1.information = {
@@ -34,7 +63,7 @@ chart1.information = {
   networkRequestParameter: {
     sensorType: "temperature",
     begin: serverInformation.minDate,
-    end: moment().add(1,'d').format("YYYY-MM-DD"),
+    end: moment().format("MM/DD/YYYY"),
     interval: 1,
     siteId: 1,
     depth: 1
@@ -96,7 +125,12 @@ chart1.method.drawChart = function(isNotSetAxisMinMax){
   var xAxis;
 
   var option = {};
+  var selectedView = chart1.information.selectedView;
 
+  chart1.option.title.text  = selectedView + ' ';
+  chart1.option.title.text += selectedView == 'depth' ? chart1.information.networkRequestParameter.depth : chart1.information.networkRequestParameter.siteId;
+
+  console.dir(chart1.option);
   $.extend(option, chart1.option);
 
   chart1.target.highcharts('StockChart', option);
@@ -128,17 +162,20 @@ var selectViewHandler = {
     var checkboxTemplate = '',
         radioTemplate = '';
 
-    $('#radio-title').text(radio.title);
-    $('#checkbox-title').text(checkbox.title);
+
+    radioTemplate += '<th>' + radio.title + '</th>';
+    checkboxTemplate += '<th>' + checkbox.title + '</th>';
+    
     chart1.information.checkboxsChecked = [];
 
+
     for(var i = 0, checkBoxNumber = checkbox.groupNumber ; i < checkBoxNumber ; i++){
-      checkboxTemplate += '<label class="checkbox-inline"><input type="checkbox" data-event-check="' + i + '" checked>' + (i + 1) + '</label>'
+      checkboxTemplate += '<td><label class="checkbox-inline"><input type="checkbox" data-event-check="' + i + '" checked>' + (i + 1) + '</label><td>'
       chart1.information.checkboxsChecked[i] = true;
     }
 
     for(var i = 0, radioNumber = radio.groupNumber ; i < radioNumber ; i++){
-      radioTemplate += '<label class="radio-inline"><input type="radio" name="inlineRadioOptions" data-event-select-item value="' + i + '">' + (i + 1) + '</label>'
+      radioTemplate += '<td><label class="radio-inline"><input type="radio" name="inlineRadioOptions" data-event-select-item value="' + i + '">' + (i + 1) + '</label><td>'
     }
 
     $('#checkbox-group').html(checkboxTemplate);
@@ -182,21 +219,15 @@ var selectViewHandler = {
 
 var selectTypeHandler = {
   handler: function(title) {
-    var yAxis = {
-          title: {
-            text: title
-          },
-          opposite: false
-        };
-    chart1.option.yAxis = yAxis;
+    chart1.option.yAxis[0].title.text = title;
   },
   temperature: function() {
-    selectTypeHandler.handler('Temperature (°C)');
+    selectTypeHandler.handler('Tem (F)');
     chart1.information.networkRequestParameter.sensorType = "temperature";
     serverAjaxRequest[chart1.information.selectedView]();
   },
   moisture: function() {  
-    selectTypeHandler.handler('Moisture');
+    selectTypeHandler.handler('Moisture (m3/m3)');
     chart1.information.networkRequestParameter.sensorType = "moisture";
     serverAjaxRequest[chart1.information.selectedView]();
   }
