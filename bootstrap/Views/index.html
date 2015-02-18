@@ -230,7 +230,7 @@
             <!-- /.panel-heading -->
             <div class="panel-body">
               <div id="map" class="map"></div>
-              <script src="../resources/javascript/openlayers.js"></script>
+              <script src="../resources/javascript/openlayer/openlayer.js"></script>
             </div>
             <!-- /.panel-body -->
           </div>
@@ -251,18 +251,18 @@
                     <div class="side-menu-bottom-item-datepicker" >
                         <div class="btn-group" data-toggle="buttons">
                             <label class="btn btn-default active">
-                                <input type="radio" data-event-change-compare-temperature name="data-event-change-compare-temperature" value="high" checked>High
+                                <input type="radio" data-event-change-compare-type name="data-event-change-compare-type" value="high" checked>High
                             </label>
                             <label class="btn btn-default">
-                                <input type="radio" data-event-change-compare-temperature name="data-event-change-compare-temperature" value="low">Low
+                                <input type="radio" data-event-change-compare-type name="data-event-change-compare-type" value="low">Low
                             </label>
                         </div>
 
-                        <select id="data-compare-year">
+                        <select select-compare-year="compare">
                             
                         </select>
                         /
-                        <select id="data-standard-year">
+                        <select select-compare-year="standard">
                             
                         </select>
                     </div>
@@ -280,24 +280,39 @@
             </div>
             <!-- /.panel-heading -->
             <div class="panel-body side-menu-bottom-items">
+                <div>
+                  <label>
+                    <select id="view-feature-select">
+                      <option value="Temperature">Temperature</option>
+                      <option value="LeafWetnessCounts">LeafWetnessCounts</option>
+                      <option value="LeafWetnessMinutes">LeafWetnessMinutes</option>
+                      <option value="Precipitation">Precipitation</option>
+                      <option value="RelativeHumidity">RelativeHumidity</option>
+                      <option value="SolarRadiation">SolarRadiation</option>
+                      <option value="WindDirection">WindDirection</option>
+                      <option value="WindGust">WindGust</option>
+                      <option value="WindSpeed">WindSpeed</option>
+                    </select> 
+                  </label>
+                </div>
                 <div class="side-menu-bottom-item">
-                    <div class="btn-group" data-toggle="buttons">
-                        <label class="btn btn-default btn-sm active" data-event-change-chart-section="all" >
-                            <input type="radio" name="data-event-change-chart-section" checked> All
-                        </label>
-                        <label class="btn btn-default btn-sm" data-event-change-chart-section="budBreak" >
-                            <input type="radio" name="data-event-change-chart-section"> Bud Break
-                        </label>
-                        <label class="btn btn-default btn-sm" data-event-change-chart-section="flowering" >
-                            <input type="radio" name="data-event-change-chart-section"> Flowering/fruit set
-                        </label>
-                        <label class="btn btn-default btn-sm" data-event-change-chart-section="veraison" >
-                            <input type="radio" name="data-event-change-chart-section"> Veraison
-                        </label>
-                        <label class="btn btn-default btn-sm" data-event-change-chart-section="harvest" >
-                            <input type="radio" name="data-event-change-chart-section"> Harvest
-                        </label>
-                    </div>
+                  <div class="btn-group" data-toggle="buttons">
+                    <label class="btn btn-default btn-sm active" data-event-change-chart-section="all" >
+                        <input type="radio" name="data-event-change-chart-section" checked> All
+                    </label>
+                    <label class="btn btn-default btn-sm" data-event-change-chart-section="budBreak" >
+                        <input type="radio" name="data-event-change-chart-section"> Bud Break
+                    </label>
+                    <label class="btn btn-default btn-sm" data-event-change-chart-section="flowering" >
+                        <input type="radio" name="data-event-change-chart-section"> Flowering/fruit set
+                    </label>
+                    <label class="btn btn-default btn-sm" data-event-change-chart-section="veraison" >
+                        <input type="radio" name="data-event-change-chart-section"> Veraison
+                    </label>
+                    <label class="btn btn-default btn-sm" data-event-change-chart-section="harvest" >
+                        <input type="radio" name="data-event-change-chart-section"> Harvest
+                    </label>
+                  </div>
                 </div>
 
                 <div class="side-menu-bottom-item-info">
@@ -338,20 +353,18 @@
   <script type="text/javascript" src="../resources/lib/bootstrap3_datepicker/js/bootstrap-datetimepicker.js"></script>
   
   <script src="../resources/lib/blockui/js/jquery.blockUI.js"></script>
-  <script src="../resources/javascript/blockUI.js"></script>
 
-  <script src="../resources/javascript/dom_event_handler.js"></script>
-  <script src="../resources/javascript/chart/chart_option.js"></script>
+  <script src="../resources/javascript/main.js"></script>
+  <script src="../resources/javascript/chart/chart_generator.js"></script>
 
-  <script src="../resources/javascript/chart/chart_1.js"></script>
-  <script src="../resources/javascript/chart/chart_2.js"></script>
+  <script src="../resources/javascript/chart/topChart/chart.js"></script>
+  <script src="../resources/javascript/chart/bottomChart/chart.js"></script>
 
-  <script src="../resources/javascript/chart/calculateTemperature.js"></script>
+  <script src="../resources/javascript/chart/dataDifferenceInfomation.js"></script>
   
-  <script src="../resources/javascript/common.js"></script>
-  <script src="../resources/javascript/datepicker.js"></script>
+  <script src="../resources/javascript/common/common.js"></script>
 
-<script src="../resources/javascript/network.js"></script>  
+  <script src="../resources/javascript/network/network.js"></script>  
 
   <!-- Custom Theme JavaScript -->
   <script src="../resources/lib/dist/js/sb-admin-2.js"></script>

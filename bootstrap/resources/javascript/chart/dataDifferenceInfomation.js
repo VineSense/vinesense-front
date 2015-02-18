@@ -1,6 +1,7 @@
+// this file is calculating the two data difference
+var dataDifferenceInfomation = {};
 
-// 온도차이에 구간 구하는 함수 
-function getPlotBandsGapTemperature(standardData, compareData, optionLow) {
+dataDifferenceInfomation.getDifference = function(standardData, compareData, optionLow) {
   var plotBands,
       points,
       data,
@@ -31,7 +32,7 @@ function getPlotBandsGapTemperature(standardData, compareData, optionLow) {
     if((!onGoing) && ((standardData[standardDataIndex][1] >= compareData[compareDataIndex][1]) ^ optionLow)) {
       onGoing = true;
       plotBands[j] = {
-        from: calCrossingPositon(standardData, compareData, standardDataIndex, compareDataIndex),
+        from: dataDifferenceInfomation.calCrossingPositon(standardData, compareData, standardDataIndex, compareDataIndex),
         color: sectionColor
       };
       data[j] = {
@@ -43,18 +44,15 @@ function getPlotBandsGapTemperature(standardData, compareData, optionLow) {
       points[k++] = [standardData[standardDataIndex][0], Math.abs((standardData[standardDataIndex][1] - compareData[compareDataIndex][1]))];
     } else if((onGoing) && ((standardData[standardDataIndex][1] <= compareData[compareDataIndex][1]) ^ optionLow)) {
       onGoing = false;
-      plotBands[j].to = calCrossingPositon(standardData, compareData, standardDataIndex, compareDataIndex);
+      plotBands[j].to = dataDifferenceInfomation.calCrossingPositon(standardData, compareData, standardDataIndex, compareDataIndex);
       data[j].endDate = standardData[standardDataIndex][0];
-
       data[j].standardAverageTemperature /= data[j].days;
       data[j].compareAverageTemperature /= data[j].days;
-
       j++;
     } else if(onGoing){
       data[j].standardAverageTemperature += standardData[standardDataIndex][1];
       data[j].compareAverageTemperature += compareData[compareDataIndex][1];
       data[j].days += 1;
-
       var sum = points[k - 1][1] + Math.abs((standardData[standardDataIndex][1] - compareData[compareDataIndex][1])); 
       points[k++] = [standardData[standardDataIndex][0], sum];
     }
@@ -63,11 +61,16 @@ function getPlotBandsGapTemperature(standardData, compareData, optionLow) {
   }
 
   if(onGoing) {
-    data[j].endDate = compareDataIndex == compareData.length ? standardData[standardDataIndex][0] : compareData[compareDataIndex][0];
-    compareDataIndex -= 1;
-    standardDataIndex -= 1;
+    if(compareDataIndex == compareData.length) {
+      data[j].endDate = standardData[standardDataIndex][0];
+      compareDataIndex -= 1;
+    } else {
+      data[j].endDate = compareData[compareDataIndex][0];
+      // standardDataIndex -= 1;
+      compareDataIndex += 1;
+    }
 
-    plotBands[j].to = calCrossingPositon(standardData, compareData, standardDataIndex, compareDataIndex);
+    plotBands[j].to = dataDifferenceInfomation.calCrossingPositon(standardData, compareData, standardDataIndex, compareDataIndex);
 
     data[j].standardAverageTemperature /= data[j].days;
     data[j].compareAverageTemperature /= data[j].days;
@@ -78,10 +81,9 @@ function getPlotBandsGapTemperature(standardData, compareData, optionLow) {
     data: data,
     points: points,
   };
-}
+};
 
-// 데이터로부터 점가져오는 함수 
-function getPoints(standardData, compareData, standardDataIndex, compareDataIndex) {
+dataDifferenceInfomation.getPoints = function(standardData, compareData, standardDataIndex, compareDataIndex) {
   var points = [];
   points[0] = {
     x: standardData[standardDataIndex-1][0],
@@ -103,16 +105,15 @@ function getPoints(standardData, compareData, standardDataIndex, compareDataInde
     y: compareData[compareDataIndex][1]
   };
   return points;
-}
+};
 
-// 온도차이에 교차하는 점 구하는 함수 
-function calCrossingPositon(standardData, compareData, standardDataIndex, compareDataIndex) {
+dataDifferenceInfomation.calCrossingPositon = function(standardData, compareData, standardDataIndex, compareDataIndex) {
   if(standardDataIndex == 0) {
     return standardData[0][0];
   } else if(compareDataIndex == 0) {
     return compareData[0][0];
   } else {
-    var points = getPoints(standardData, compareData, standardDataIndex, compareDataIndex);
+    var points = dataDifferenceInfomation.getPoints(standardData, compareData, standardDataIndex, compareDataIndex);
     return ((points[0].x * points[1].y - points[0].y * points[1].x) * (points[2].x - points[3].x) - (points[0].x - points[1].x) * (points[2].x * points[3].y - points[2].y * points[3].x)) / ((points[0].x - points[1].x) * (points[2].y - points[3].y) - (points[0].y - points[1].y) * (points[2].x - points[3].x));    
   }
-}
+};
