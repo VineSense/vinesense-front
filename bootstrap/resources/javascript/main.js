@@ -14,6 +14,7 @@ var charts = [],
     serverInformation = {
       host: 'http://vines.cloudapp.net/Nickel',
       minDate: '2014-05-24',
+      currentYear: 2015,
       siteNumber: 7,
       depthNumber: 5
     };
@@ -21,18 +22,18 @@ var charts = [],
 $(document).on('ready page:load', function() {
 
   // document-handler : topChart
-  $('#radio-group').on('change', '[data-event-select-item]', charts[0].method.radioChangeEventHandler);
-  $('#checkbox-group').on('change', '[data-event-check]', charts[0].method.checkboxChangeEventHandler);
-  $('[data-event-change-type]').on('change', charts[0].method.typeChangeEventHandler);
-  $('[data-event-change-view-day]').on('change', charts[0].method.viewDayChangeEventHandler);
-  $('[data-event-change-view-option]').on('change', charts[0].method.viewChangeEventHanler);
-  $('[data-event-on-off-precipitation]').on('change', charts[0].method.onOffPrecipitationEventHandler);
+  $('#radio-group').on('change', '[data-event-select-item]', topChart.method.radioChangeEventHandler);
+  $('#checkbox-group').on('change', '[data-event-check]', topChart.method.checkboxChangeEventHandler);
+  $('[data-event-change-type]').on('change', topChart.method.typeChangeEventHandler);
+  $('[data-event-change-view-day]').on('change', topChart.method.viewDayChangeEventHandler);
+  $('[data-event-change-view-option]').on('change', topChart.method.viewChangeEventHanler);
+  $('[data-event-on-off-precipitation]').on('change', topChart.method.onOffPrecipitationEventHandler);
   
   // document-handler : bottomChart
-  $('[data-event-change-compare-type]').on('change', charts[1].method.compareTypeChangeHandler);
-  $('[data-event-change-chart-section]').on('change', charts[1].method.chartSectionChangeHandler);
-  $('#view-feature-select').on('change', charts[1].method.viewFeatureSelectHandler);
-  $('[select-compare-year]').on('change', charts[1].method.compareYearSelectHandler);
+  $('[data-event-change-compare-type]').on('change', bottomChart.method.compareTypeChangeHandler);
+  $('[data-event-change-chart-section]').on('change', bottomChart.method.chartSectionChangeHandler);
+  $('#view-feature-select').on('change', bottomChart.method.viewFeatureSelectHandler);
+  $('[select-compare-year]').on('change', bottomChart.method.compareYearSelectHandler);
 
   // datapicker 
   (function() {
@@ -93,7 +94,8 @@ $(document).on('ready page:load', function() {
   for(var i = 0, length = serverInformation.siteNumber ; i < length ; i++) {
     topChart.information.checkboxsChecked[i] = true;
   }
-  serverAjaxRequest['depth']();
   serverAjaxRequest['weather']();
+  serverAjaxRequest['depth']();
+
 });
 

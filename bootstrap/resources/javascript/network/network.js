@@ -131,8 +131,8 @@ responsehandler.bottomChart = {
         color: chartColors[i]
       };
     }
-    standardData = series[0].data;
-    compareData = series[1].data;
+    compareData = series[0].data;
+    standardData = series[1].data;
 
     bottomChart.option.series[1] = series[0];
     bottomChart.option.series[2] = series[1];

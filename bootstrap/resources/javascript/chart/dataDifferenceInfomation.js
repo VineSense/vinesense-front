@@ -20,7 +20,7 @@ dataDifferenceInfomation.getDifference = function(standardData, compareData, opt
   k = j = standardDataIndex = compareDataIndex = 0;
   sectionColor = optionLow ? 'rgba(28, 186, 188, .6)' : 'rgba(206, 89, 115, .6)';
 
-  while((compareDataIndex < compareData.length) && (standardDataIndex < standardData.length)) {
+  while((compareDataIndex < compareData.length - 1) && (standardDataIndex < standardData.length - 1)) {
     if(standardData[standardDataIndex][0] > compareData[compareDataIndex][0]) {
       compareDataIndex++;
       continue;
@@ -28,7 +28,7 @@ dataDifferenceInfomation.getDifference = function(standardData, compareData, opt
       standardDataIndex++;
       continue;
     }
-
+    
     if((!onGoing) && ((standardData[standardDataIndex][1] >= compareData[compareDataIndex][1]) ^ optionLow)) {
       onGoing = true;
       plotBands[j] = {
@@ -61,13 +61,10 @@ dataDifferenceInfomation.getDifference = function(standardData, compareData, opt
   }
 
   if(onGoing) {
-    if(compareDataIndex == compareData.length) {
+    if(compareDataIndex == compareData.length - 1) {
       data[j].endDate = standardData[standardDataIndex][0];
-      compareDataIndex -= 1;
     } else {
       data[j].endDate = compareData[compareDataIndex][0];
-      // standardDataIndex -= 1;
-      compareDataIndex += 1;
     }
 
     plotBands[j].to = dataDifferenceInfomation.calCrossingPositon(standardData, compareData, standardDataIndex, compareDataIndex);
@@ -75,7 +72,6 @@ dataDifferenceInfomation.getDifference = function(standardData, compareData, opt
     data[j].standardAverageTemperature /= data[j].days;
     data[j].compareAverageTemperature /= data[j].days;
   }
-
   return { 
     plotBands: plotBands,
     data: data,
@@ -89,17 +85,14 @@ dataDifferenceInfomation.getPoints = function(standardData, compareData, standar
     x: standardData[standardDataIndex-1][0],
     y: standardData[standardDataIndex-1][1]  
   };
-
   points[1] = {
     x: standardData[standardDataIndex][0],
     y: standardData[standardDataIndex][1]  
   };
-
   points[2] = {
     x: compareData[compareDataIndex-1][0],
     y: compareData[compareDataIndex-1][1]
   };
-  
   points[3] = {
     x: compareData[compareDataIndex][0],
     y: compareData[compareDataIndex][1]
@@ -112,6 +105,10 @@ dataDifferenceInfomation.calCrossingPositon = function(standardData, compareData
     return standardData[0][0];
   } else if(compareDataIndex == 0) {
     return compareData[0][0];
+  } else if(compareDataIndex == compareData.length) {
+    return standardData[compareDataIndex - 1][0];
+  } else if(standardDataIndex == standardData.length) {
+    return standardData[standardDataIndex - 1][0];
   } else {
     var points = dataDifferenceInfomation.getPoints(standardData, compareData, standardDataIndex, compareDataIndex);
     return ((points[0].x * points[1].y - points[0].y * points[1].x) * (points[2].x - points[3].x) - (points[0].x - points[1].x) * (points[2].x * points[3].y - points[2].y * points[3].x)) / ((points[0].x - points[1].x) * (points[2].y - points[3].y) - (points[0].y - points[1].y) * (points[2].x - points[3].x));    

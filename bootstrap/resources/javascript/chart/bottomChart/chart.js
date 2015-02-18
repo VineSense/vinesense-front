@@ -120,16 +120,29 @@ bottomChart.method.viewFeatureSelectHandler = function() {
   serverAjaxRequest['weather']();
 };
 
-bottomChart.method.compareYearSelectHandler = function() {
-  var selectTarget = $(this).attr('select-compare-year');
+bottomChart.method.compareYearSelectHandler = function(e) {
+  var selectTarget = $(this).attr('select-compare-year'),
+      yearInformation = bottomChart.information.networkRequestParameter;
 
   if(selectTarget == 'standard') {
-    bottomChart.information.networkRequestParameter.targetYear = $(this).val();
+    var targetYear = parseInt($(this).val());
+    if(yearInformation.compareYear >= targetYear){
+      $('[select-compare-year="standard"]').find('option[value="' + yearInformation.targetYear + '"]').attr('selected', 'selected');
+      alert('nonvalidated');
+    } else {
+      bottomChart.information.networkRequestParameter.targetYear = targetYear;
+      serverAjaxRequest['weather']();
+    } 
   } else {
-    bottomChart.information.networkRequestParameter.compareYear = $(this).val();
+    var compareYear = parseInt($(this).val());
+    if(yearInformation.targetYear <= compareYear){
+      $('[select-compare-year="compare"]').find('option[value="' + yearInformation.compareYear + '"]').attr('selected', 'selected');
+      alert('nonvalidated');
+    } else {
+      bottomChart.information.networkRequestParameter.compareYear = compareYear;
+      serverAjaxRequest['weather']();
+    }
   }
-
-  serverAjaxRequest['weather']();
 };
 
 bottomChart.method.drawChart = function(isFirst){

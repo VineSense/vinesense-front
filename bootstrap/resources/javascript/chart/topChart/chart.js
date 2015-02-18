@@ -63,7 +63,6 @@ topChart.method.checkboxChangeEventHandler = function() {
 
 topChart.method.typeChangeEventHandler = function(){
   var selectedValue = $(this).val();
-
   topChart.method.cahngeType[selectedValue]();
 };
 

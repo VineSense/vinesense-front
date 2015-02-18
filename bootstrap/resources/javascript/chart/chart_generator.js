@@ -17,11 +17,12 @@ var chartGenerator = {
       type: 'spline',
       resetZoomButton: {
         position: {
-          align: 'right',
+          align: 'right', 
           verticalAlign: 'top',
-          x: 0,
-          y: 130
-        }
+          x: -10,
+          y: 10
+        },
+        relativeTo: 'chart'
       }
     };
     option.title = {
@@ -139,7 +140,6 @@ var chartGenerator = {
     newChart.option = chartGenerator.mergeOption(option, additionalOption);
     return newChart;
   },
-
   mergeOption: function(option1, option2) {
     for(var property in option2) {
       if((option1[property] != null)
