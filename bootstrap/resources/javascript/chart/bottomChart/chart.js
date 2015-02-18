@@ -1,6 +1,6 @@
 var bottomChart;
 (function() {
-  bottomChart = chartGenerator.create($('#chart-2'), {
+  bottomChart = chartGenerator.create($('#bottom-chart'), {
     xAxis: {
       events:{
         setExtremes: function(e){
@@ -108,7 +108,7 @@ bottomChart.method.chartSectionChangeHandler = function(){
   bottomChart.information.xAxis.min = min;
   bottomChart.information.xAxis.max = max;
   bottomChart.method.selectViewRange(bottomChart, min, max);
-  showWeatherCompareInfomation[selectedHighLow]();
+  bottomChart.method.showCompareInfomation[selectedHighLow]();
 };
 
 bottomChart.method.viewFeatureSelectHandler = function() {
@@ -139,6 +139,8 @@ bottomChart.method.drawChart = function(){
 
   bottomChart.method.selectViewRange(bottomChart, bottomChart.information.xAxis.min, bottomChart.information.xAxis.max);
   bottomChart.method.showCompareInfomation[selectedHighLow]();
+
+  console.log('abc');
 };
 
 bottomChart.method.setFlag = function() {

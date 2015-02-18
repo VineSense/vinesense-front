@@ -10,7 +10,7 @@ var charts = [],
 
 $(document).on('ready page:load', function() {
 
-  // document-handler : chart-1
+  // document-handler : topChart
   $('#radio-group').on('change', '[data-event-select-item]', charts[0].method.radioChangeEventHandler);
   $('#checkbox-group').on('change', '[data-event-check]', charts[0].method.checkboxChangeEventHandler);
   $('[data-event-change-type]').on('change', charts[0].method.typeChangeEventHandler);
@@ -18,7 +18,7 @@ $(document).on('ready page:load', function() {
   $('[data-event-change-view-option]').on('change', charts[0].method.viewChangeEventHanler);
   $('[data-event-on-off-precipitation]').on('change', charts[0].method.onOffPrecipitationEventHandler);
   
-  // document-handler : chart-2
+  // document-handler : bottomChart
   $('[data-event-change-compare-type]').on('change', charts[1].method.compareTypeChangeHandler);
   $('[data-event-change-chart-section]').on('change', charts[1].method.chartSectionChangeHandler);
   $('#view-feature-select').on('change', charts[1].method.viewFeatureSelectHandler);
@@ -58,7 +58,7 @@ $(document).on('ready page:load', function() {
   });
 
 
-  // init chart-2 compare year
+  // init bottomChart compare year
   (function() {
     var startYear = parseInt(moment(serverInformation.minDate).format("YYYY")),
         yesterYear = parseInt(moment().subtract(1, 'y').format("YYYY")),

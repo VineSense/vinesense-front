@@ -1,12 +1,11 @@
 var topChart;
 (function() {
-  topChart = chartGenerator.create($('#chart-1'), {
+  topChart = chartGenerator.create($('#top-chart'), {
     xAxis: {
       events:{
         setExtremes: function(e){
           topChart.information.xAxis.min = e.min;
           topChart.information.xAxis.max = e.max;
-          topChart.method.selectViewRange(topChart, e.min, e.max);
           topChart.object.xAxis[0].setTitle({ text: moment(e.min).get('year') });
         }
       }
@@ -153,13 +152,11 @@ topChart.method.changeViewType = {
   getCheckBoxHTML: function(checkbox) {
     var checkboxTemplate = '';
 
-    topChart.information.checkboxsChecked = [];
-
     checkboxTemplate += '<th>' + checkbox.title + '</th>';
     
     for(var i = 0, checkBoxNumber = checkbox.groupNumber ; i < checkBoxNumber ; i++){
       checkboxTemplate += '<td><label class="checkbox-inline"><input type="checkbox" data-event-check="' + i + '" checked>' + (i + 1) + '</label><td>'
-      topChart.information.checkboxsChecked[i] = true;
+      topChart.information.checkboxsChecked[i + 1] = true;
     }
 
     return checkboxTemplate

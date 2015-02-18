@@ -19,17 +19,17 @@ vinesense = {
   },
 
   selectPanelHandler : {
-    'chart-1' : function(e) {
-      var mainPanel = $('#chart-1-panel'),
-          sidePanel = $("#chart-1-side-panel"),
-          mainSpan = $('#chart-1-span'),
+    'top-chart' : function(e) {
+      var mainPanel = $('#top-chart-panel'),
+          sidePanel = $("#top-chart-side-panel"),
+          mainSpan = $('#top-chart-span'),
           index = 0;
       vinesense.togglePanelSpanClass(mainPanel, mainSpan, sidePanel, index);
     },
-    'chart-2' : function() {
-      var mainPanel = $('#chart-2-panel'),
-          sidePanel = $("#chart-2-side-panel"),
-          mainSpan = $('#chart-2-span'),
+    'bottom-chart' : function() {
+      var mainPanel = $('#bottom-chart-panel'),
+          sidePanel = $("#bottom-chart-side-panel"),
+          mainSpan = $('#bottom-chart-span'),
           index = 1;
       vinesense.togglePanelSpanClass(mainPanel, mainSpan, sidePanel, index);
     },
@@ -62,7 +62,7 @@ vinesense = {
       mainSpan.addClass('glyphicon-resize-full');
       sidePanel.show();
     }
-    charts[index].method.drawChart();
+    charts[index].method.drawChart(true);
   },
   
   blockUI: {
