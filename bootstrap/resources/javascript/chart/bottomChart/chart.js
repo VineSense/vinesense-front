@@ -6,8 +6,8 @@ var bottomChart;
         setExtremes: function(e){
           var selectedHighLow = bottomChart.information.highLow.selected;
 
-          bottomChart.information.xAxis.min = e.min;
-          bottomChart.information.xAxis.max = e.max;
+          bottomChart.information.xAxis.min = e.min || bottomChart.information.xAxis.flags.start.x;
+          bottomChart.information.xAxis.max = e.max || bottomChart.information.xAxis.flags.end.x;
 
           bottomChart.method.showCompareInfomation[selectedHighLow]();
         }
@@ -21,6 +21,7 @@ var bottomChart;
   bottomChart.option.yAxis[1].title.text = 'Cusum';
   bottomChart.option.yAxis[1].labels.text = '{value} (F)';
 
+
   bottomChart.information = {
     highLow: {
       selected: 'high',
@@ -33,8 +34,8 @@ var bottomChart;
       feature: 'Temperature'
     },
     xAxis: {
-      min: null,
-      max: null,
+      min: Date.UTC(2012, 0, 1),
+      max: Date.UTC(2012, 12, 31),
       flags: {
         budBreak: {
           x: Date.UTC(2012, 3, 1),
@@ -66,12 +67,9 @@ var bottomChart;
 })();
 
 bottomChart.method.compareTypeChangeHandler = function(){
-  var selectedValue = $(this).val(),
-      standardData = bottomChart.option.series[0].data,
-      compareData = bottomChart.option.series[1].data;
+  var selectedValue = $(this).val();
 
   bottomChart.method.setCompareType[selectedValue]();
-
   bottomChart.method.drawChart();
 };
 
@@ -84,30 +82,35 @@ bottomChart.method.chartSectionChangeHandler = function(){
 
   switch(selectedValue) {
   case 'all':
-      min = flags.start.x;   
-      max = flags.end.x;   
+      min = flags.start.x;
+      max = flags.end.x;
+      bottomChart.object.zoomOut();  
     break;
   case 'budBreak':
-      min = flags.start.x;   
-      max = flags.budBreak.x;   
+      min = flags.budBreak.x;   
+      max = flags.flowering.x;   
+      bottomChart.method.selectViewRange(bottomChart, min, max);
     break;
   case 'flowering':
-      min = flags.budBreak.x;
-      max = flags.flowering.x;
-    break;
-  case 'veraison':
       min = flags.flowering.x;
       max = flags.veraison.x;
+      bottomChart.method.selectViewRange(bottomChart, min, max);
     break;
-  case 'harvest':
+  case 'veraison':
       min = flags.veraison.x;
       max = flags.harvest.x;
+      bottomChart.method.selectViewRange(bottomChart, min, max);
+    break;
+  case 'harvest':
+      min = flags.harvest.x;
+      max = flags.end.x;
+      bottomChart.method.selectViewRange(bottomChart, min, max);
     break;
   }
 
   bottomChart.information.xAxis.min = min;
   bottomChart.information.xAxis.max = max;
-  bottomChart.method.selectViewRange(bottomChart, min, max);
+  
   bottomChart.method.showCompareInfomation[selectedHighLow]();
 };
 
@@ -129,18 +132,27 @@ bottomChart.method.compareYearSelectHandler = function() {
   serverAjaxRequest['weather']();
 };
 
-bottomChart.method.drawChart = function(){
+bottomChart.method.drawChart = function(isFirst){
   var option = {},
-      selectedHighLow = bottomChart.information.highLow.selected;
+      selectedHighLow = bottomChart.information.highLow.selected,
+      xAxis = bottomChart.information.xAxis,
+      isZoom = isFirst ? false : true;
 
   $.extend(option, bottomChart.option);
+
   bottomChart.target.highcharts('StockChart', option);
   bottomChart.object = bottomChart.target.highcharts();
 
-  bottomChart.method.selectViewRange(bottomChart, bottomChart.information.xAxis.min, bottomChart.information.xAxis.max);
-  bottomChart.method.showCompareInfomation[selectedHighLow]();
+  bottomChart.object.series[0].update({tooltip:{shared: true}}); 
 
-  console.log('abc');
+  if(xAxis.min != bottomChart.information.xAxis.flags.start.x 
+    && xAxis.max != bottomChart.information.xAxis.flags.end.x){ 
+    bottomChart.method.selectViewRange(bottomChart, xAxis.min, xAxis.max);
+  } else {
+    bottomChart.object.zoomOut();  
+  }
+  
+  bottomChart.method.showCompareInfomation[selectedHighLow]();
 };
 
 bottomChart.method.setFlag = function() {
@@ -163,7 +175,6 @@ bottomChart.method.setCompareType = {
       yAxis: 1,
       data: sectionInfomation.points
     };
-
     bottomChart.option.xAxis.plotBands = sectionInfomation.plotBands;
   },
   high: function() {

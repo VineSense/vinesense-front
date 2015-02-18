@@ -1,5 +1,15 @@
 
 // -------------------------- chart 정보 --------------------------
+
+var chartColors =[
+  '#e41a1c',
+  '#377eb8',
+  '#4daf4a',
+  '#984ea3',
+  '#ff7f00',
+  '#ffff33',
+  '#a65628'];
+
 var charts = [],
     serverInformation = {
       host: 'http://vines.cloudapp.net/Nickel',

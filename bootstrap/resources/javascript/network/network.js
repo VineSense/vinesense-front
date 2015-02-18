@@ -80,10 +80,12 @@ responsehandler.topChart = {
         name: prefixName + names[j],
         type: 'spline',
         yAxis: 0,
-        data: responsehandler.getSeriesData(res.result[j].data)
+        data: responsehandler.getSeriesData(res.result[j].data),
+        color: chartColors[j]
       }; 
     }
     topChart.option.series = series;
+
     topChart.method.drawChart();
     vinesense.blockUI.unblock();
   },
@@ -99,6 +101,7 @@ responsehandler.topChart = {
     for(var i = 0, length = res.result.length ; i < length ; i++) {
       names[i] = res.result[i].siteId;
     }
+
     responsehandler.topChart.handler(res, 'site', names);
   }
 };
@@ -121,19 +124,23 @@ responsehandler.bottomChart = {
       if(i == 1) {
         makeData(convertedData, moment(resultData[j - 1][0]), j);
       }
-      bottomChart.option.series[i] = {
+      series[i] = {
         name: res.result[i].tag,
         data: convertedData,
-        yAxis: 0
+        yAxis: 0,
+        color: chartColors[i]
       };
     }
-    standardData = bottomChart.option.series[0].data;
-    compareData = bottomChart.option.series[1].data;
+    standardData = series[0].data;
+    compareData = series[1].data;
+
+    bottomChart.option.series[1] = series[0];
+    bottomChart.option.series[2] = series[1];
 
     bottomChart.information.highLow.high = dataDifferenceInfomation.getDifference(standardData, compareData, false);
     bottomChart.information.highLow.low = dataDifferenceInfomation.getDifference(standardData, compareData, true);
 
-    bottomChart.option.series[2] = bottomChart.option.series[0];
+    // bottomChart.option.series[2] = bottomChart.option.series[0];
 
     //TODO * when get the 2 years data, add this function *//
 
@@ -157,9 +164,12 @@ responsehandler.bottomChart = {
       data: bottomChart.information.highLow.high.points
     };
 
+    // bottomChart.option.series[1] = series[0];
+
     bottomChart.option.xAxis.plotBands = bottomChart.information.highLow.high.plotBands;
     bottomChart.method.setFlag();
-    bottomChart.method.drawChart();
+
+    bottomChart.method.drawChart(true);
 
     // off BlockUI
     vinesense.blockUI.unblock();

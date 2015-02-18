@@ -62,7 +62,7 @@ vinesense = {
       mainSpan.addClass('glyphicon-resize-full');
       sidePanel.show();
     }
-    charts[index].method.drawChart(true);
+    charts[index].method.drawChart();
   },
   
   blockUI: {

@@ -17,8 +17,8 @@ var chartGenerator = {
       type: 'spline',
       resetZoomButton: {
         position: {
-          align: 'right', // by default
-          verticalAlign: 'top', // by default
+          align: 'right',
+          verticalAlign: 'top',
           x: 0,
           y: 130
         }
@@ -32,15 +32,14 @@ var chartGenerator = {
           text: null
       },
       type: 'datetime',
-      dateTimeLabelFormats: { // don't display the dummy year
+      dateTimeLabelFormats: { 
         day: '%m/%e'
       },
       events:{
         setExtremes: function(e){}
       }
     };
-
-    option.yAxis = [{ // Primary yAxis
+    option.yAxis = [{
       labels: {
         format: '{value}',
         style: {
@@ -100,17 +99,12 @@ var chartGenerator = {
         marker: {
           enabled: false
         },
-        events: {
-          legendItemClick: function () {
-            return false; 
-          }
-        },
-        states: {
-          hover: {
-            lineWidth: 2
-          }
-        },
         showInLegend: false
+      },
+      series: {
+        dataGrouping: {
+          enabled: false
+        }
       }
     };
     option.navigator = {
@@ -135,6 +129,7 @@ var chartGenerator = {
 
     // default method setting
     method.selectViewRange = function(chart, min, max) {
+      chart.object.zoomOut();
       chart.object.xAxis[0].setExtremes(min, max);
       chart.object.showResetZoom();
     };

@@ -22,6 +22,7 @@ var topChart;
     selectedView: 'depth',
     checkboxsChecked: [],
     xAxis: {
+      isSetXAxis: false,
       min: null,
       max: null
     },
@@ -81,7 +82,7 @@ topChart.method.onOffPrecipitationEventHandler = function(isNotSetAxisMinMax){
   topChart.method.toggleSeries(0, isChecked);
 };
  
-topChart.method.drawChart = function(isNotSetAxisMinMax){
+topChart.method.drawChart = function(){
   var xAxis,
       option = {},
       selectedView = topChart.information.selectedView,
@@ -94,14 +95,21 @@ topChart.method.drawChart = function(isNotSetAxisMinMax){
 
   topChart.target.highcharts('StockChart', option);
   topChart.object = topChart.target.highcharts();
-  
-  if(!isNotSetAxisMinMax){
+
+  if(!topChart.information.xAxis.isSetXAxis){
     topChart.method.setXAxisMinMax(currentChartState.interval);
+    topChart.information.xAxis.isSetXAxis = true;
   }
 
   xAxis = topChart.information.xAxis;
 
-  topChart.method.selectViewRange(topChart, xAxis.min, xAxis.max);
+  if(typeof(xAxis.min) == typeof(undefined)) {
+    topChart.object.zoomOut();
+  } else {
+    topChart.method.selectViewRange(topChart, xAxis.min, xAxis.max);
+  }
+  
+  
   topChart.method.hideSeries();
 };
 
@@ -117,9 +125,11 @@ topChart.method.toggleSeries = function(index, isChecked) {
   if(isChecked) {
     topChart.object.series[index].show();
     topChart.information.checkboxsChecked[index] = true;
+    topChart.object.series[0].update({tooltip:{shared: true}});
   } else {
     topChart.object.series[index].hide();
     topChart.information.checkboxsChecked[index] = false;
+    topChart.object.series[0].update({tooltip:{shared: true}}); 
   }
 };
 
