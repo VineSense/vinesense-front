@@ -112,6 +112,16 @@ var chartGenerator = {
       enabled: false
     }
     option.tooltip = {
+      // positioner: function(boxWidth, boxHeight, point) {
+      //   return {
+      //       x: point.plotX + 200,
+      //       y: point.plotY - 30
+      //   };
+      // },
+      
+      // positioner: function () {
+      //   return { x: 500, y: 0 };
+      // },
       useHTML: true,
       valueDecimals: 2,
       shared: true,

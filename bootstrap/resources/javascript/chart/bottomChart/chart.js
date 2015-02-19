@@ -43,7 +43,7 @@ var bottomChart;
         }, 
         flowering: {
           x: Date.UTC(2012, 4, 19),
-          title: 'Flowering/fruit set'
+          title: 'Flowering'
         }, 
         veraison: {
           x: Date.UTC(2012, 6, 12),
@@ -216,6 +216,7 @@ bottomChart.method.showCompareInfomation = {
         totalDay = 0,
         adjustSpaces = bottomChart.method.showCompareInfomation.adjustSpaces;
 
+    compareInfomationHTML = '<li><b>Date  /   Difference  /   average  /  days</b></li> '
     for(var i = 0, length = data.length ; i < length ; i++) {
       if(data[i].endDate < min) { continue; } 
       else if(data[i].startDate > max) { break; }
@@ -226,11 +227,11 @@ bottomChart.method.showCompareInfomation = {
       compareInfomationHTML += 
         '<li>' 
        + moment(data[i].startDate).format("MM/DD") + ' ~ ' + moment(data[i].endDate).format("MM/DD")
-       + ' : ' + adjustSpaces(gap, 6) 
+       + ' / ' + bottomChart.method.showCompareInfomation.adjustSpaces(gap, 6) 
        + unit 
-       + ' (' + average +' : ' + adjustSpaces(data[i].standardAverageTemperature.toFixed(2), 2) + unit + ')'
-       + ' # days : '
-       + adjustSpaces(data[i].days, 3)
+       + ' / ' + average +' : ' + bottomChart.method.showCompareInfomation.adjustSpaces(data[i].standardAverageTemperature.toFixed(2), 2) + unit
+       + ' / '
+       + bottomChart.method.showCompareInfomation.adjustSpaces(data[i].days, 3)
        +'</li>';
 
        totalDay += data[i].days;
