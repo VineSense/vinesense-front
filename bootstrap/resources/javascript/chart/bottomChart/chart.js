@@ -149,8 +149,11 @@ bottomChart.method.drawChart = function(isFirst){
   var option = {},
       selectedHighLow = bottomChart.information.highLow.selected,
       xAxis = bottomChart.information.xAxis,
-      isZoom = isFirst ? false : true;
+      isZoom = isFirst ? false : true,
+      selectedHighLow = bottomChart.information.highLow.selected;
 
+  bottomChart.method.setCompareType[selectedHighLow]();
+  
   $.extend(option, bottomChart.option);
 
   bottomChart.target.highcharts('StockChart', option);
@@ -166,6 +169,7 @@ bottomChart.method.drawChart = function(isFirst){
   }
   
   bottomChart.method.showCompareInfomation[selectedHighLow]();
+
 };
 
 bottomChart.method.setFlag = function() {

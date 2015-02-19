@@ -63,11 +63,13 @@ dataDifferenceInfomation.getDifference = function(standardData, compareData, opt
   if(onGoing) {
     if(compareDataIndex == compareData.length - 1) {
       data[j].endDate = standardData[standardDataIndex][0];
+      plotBands[j].to = standardData[standardDataIndex][0];
     } else {
       data[j].endDate = compareData[compareDataIndex][0];
+      plotBands[j].to = standardData[standardDataIndex][0];
     }
 
-    plotBands[j].to = dataDifferenceInfomation.calCrossingPositon(standardData, compareData, standardDataIndex, compareDataIndex);
+    
 
     data[j].standardAverageTemperature /= data[j].days;
     data[j].compareAverageTemperature /= data[j].days;
