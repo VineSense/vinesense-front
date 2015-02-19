@@ -367,12 +367,12 @@ table.dataTable thead .sorting:after {
 }
 
 .side-menu-top-items {
-    height : 265px;
+    height : 365px;
     text-align: center;
 }
 
 .side-menu-top-item {
-    margin-top: 25px ! important;
+    margin-top: 30px ! important;
     margin-bottom: 30px ! important;
 }
 
@@ -385,7 +385,7 @@ table.dataTable thead .sorting:after {
 }
 
 .side-menu-bottom-items {
-    height : 265px;
+    height : 365px;
     text-align: center;
 }
 
@@ -405,7 +405,7 @@ table.dataTable thead .sorting:after {
 .side-menu-bottom-item-info {
     overflow-x:hidden;
     overflow-y:auto;
-    height: 180px;
+    height: 280px;
 }
 
 .panel-item-toggle-btn {

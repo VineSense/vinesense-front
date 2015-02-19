@@ -12,7 +12,7 @@ var chartGenerator = {
 
     // default option setting
     option.chart = {
-      height: 200,
+      height: 300,
       zoomType: 'x',
       type: 'spline',
       resetZoomButton: {
@@ -118,7 +118,7 @@ var chartGenerator = {
       //       y: point.plotY - 30
       //   };
       // },
-      
+
       // positioner: function () {
       //   return { x: 500, y: 0 };
       // },
