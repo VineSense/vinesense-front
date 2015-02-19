@@ -10,14 +10,17 @@ var chartColors =[
   '#ffff33',
   '#a65628'];
 
-var charts = [],
-    serverInformation = {
-      host: 'http://vines.cloudapp.net/Nickel',
-      minDate: '2014-05-24',
-      currentYear: 2015,
-      siteNumber: 7,
-      depthNumber: 5
-    };
+var charts = [];
+
+if (typeof (serverInformation) === 'undefined') {
+  serverInformation = {
+    host: 'http://vines.cloudapp.net/Nickel',
+    minDate: '2014-05-24',
+    currentYear: 2015,
+    siteNumber: 7,
+    depthNumber: 5
+  };
+}
 
 $(document).on('ready page:load', function() {
 
